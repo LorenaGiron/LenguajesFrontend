@@ -1,38 +1,46 @@
 import { createContext, useContext, useState } from "react";
-import http from "../api/http";
+import http from "../api/http"; 
+import { loginRequest, getProfileRequest } from "../api/auth.api"; 
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); 
   const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!token); 
 
   const login = async (username, password) => {
-    const response = await http.post("/auth/login", {
-      username,
-      password,
-    });
+    try {
+        //Petición de Token
+        const tokenResponse = await loginRequest(username, password); 
+        const receivedToken = tokenResponse.access_token;
+        //Guardar Token
+        setToken(receivedToken);
+        localStorage.setItem("token", receivedToken);
+        setIsAuthenticated(true);
+        //Petición de Perfil (Usando el token recién guardado)
+        const profileResponse = await getProfileRequest();
+        setUser(profileResponse); 
+        return profileResponse.role; 
 
-    const receivedToken = response.data.access_token;
-
-    setToken(receivedToken);
-    localStorage.setItem("token", receivedToken);
-
-    setUser({ username });
+    } catch (error) {
+        throw new Error("Credenciales inválidas o error de red.");
+    }
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
+    setIsAuthenticated(false);
     localStorage.removeItem("token");
   };
 
   const value = {
     user,
     token,
-    login,
+    login, 
     logout,
-    isAuthenticated: !!token,
+    isAuthenticated,
   };
 
   return (
