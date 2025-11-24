@@ -1,4 +1,5 @@
 import { useAuth } from "../context/AuthContext";
+// SOLO PARA HACER PRUEBAS NO ESTA COMPLETO
 
 export default function AdminDashboard() {
     const { user } = useAuth(); // Obtenemos la info del usuario logueado
