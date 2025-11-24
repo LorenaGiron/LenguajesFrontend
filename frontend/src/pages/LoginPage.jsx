@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 
+// ❌ NOTA: Quitamos los imports AdminDashboard y TeacherDashboard 
+// porque no se usan directamente en esta página, solo en AppRoutes.
+
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -17,10 +20,26 @@ export default function LoginPage() {
     setError("");
 
     try {
-      await login(username, password);
-      navigate("/dashboard");
+      // 1. Obtiene el rol del usuario (ej: "admin" o "profesor")
+      const userRole = await login(username, password); 
+      
+      let redirectTo = "/dashboard"; // Ruta por defecto si el rol no es Admin/Profesor (opcional)
+      
+      // 2. Lógica de redirección por rol (usando las rutas definidas en AppRoutes)
+      if (userRole === "admin") {
+        // Redirige a la ruta "/admin/dashboard" que definimos en AppRoutes
+        redirectTo = "/admin/dashboard"; 
+      } else if (userRole === "profesor") {
+        // Redirige a la ruta "/profesor/dashboard" que definimos en AppRoutes
+        redirectTo = "/profesor/dashboard"; 
+      }
+      
+      // 3. Navegar a la ruta decidida
+      navigate(redirectTo);
+      
     } catch (err) {
-      setError("Credenciales incorrectas");
+      // Muestra el mensaje de error si el loginRequest falla (ej: 401 Unauthorized)
+      setError("Credenciales incorrectas"); 
     }
   };
 
