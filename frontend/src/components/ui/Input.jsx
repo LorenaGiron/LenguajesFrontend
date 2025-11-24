@@ -8,10 +8,10 @@ export default function Input({ label, type = "text", value, onChange, placehold
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="px-3 py-2 border border-gray-300 rounded-md 
-                   placeholder:text-neutral-400
-                   text-neutral-700
-                   focus:outline-none focus:ring-2 focus:ring-sky-500"
+        className="px-3 py-2 border border-grisC rounded-md 
+                   placeholder:text-grisM
+                   text-grisF
+                   focus:outline-none focus:ring-2 focus:ring-azulM"
       />
     </div>
   );
