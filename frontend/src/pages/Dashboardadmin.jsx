@@ -1,10 +1,12 @@
 import Sidebar from "../components/layout/Sidebar";
+import Topbar from "../components/layout/Topbar";
 
 export default function DashboardAdmin() {
   return (
     <div className="flex h-screen bg-grisC">
       {/* Sidebar fijo */}
       <Sidebar />
+      <Topbar />
 
       {/* Contenido principal */}
       <main className="flex-1 p-8 overflow-y-auto">
