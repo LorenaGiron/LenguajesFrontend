@@ -4,10 +4,13 @@ import AdminDashboard from "../pages/DashboardAdmin";
 import AdminPage from "../pages/AdminPage";  
 import TeacherDashboard from "../pages/Dashboardteacher";
 import LoginPage from "../pages/LoginPage";
-import Register from "../pages/Register";
+import RegisterStudent from "../pages/RegisterStudent";
 import StudentsPage from "../pages/StudentsPage";
 import LandingPage from "../pages/LandingPage";
-
+import TeachersList from "../pages/TeacherPageList";
+import ProfessorForm from "../components/professors/ProfessorForm";
+import SubjectForm from "../components/subject/SubjectForm";
+import SubjectList from "../pages/SubjectsPage.jsx";
 /*
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -30,10 +33,15 @@ export default function AppRoutes() {
 
         {/* Alumnos (tu StudentsPage.jsx) */}
         <Route path="alumnos" element={<StudentsPage />} />
+        
 
         {/* Registro (si quieres dentro del admin) */}
-        <Route path="register" element={<Register />} />
+        <Route path="register-student" element={<RegisterStudent />} />
 
+        <Route path="profesores-list" element={<TeachersList />} />
+        <Route path="register-professor" element={< ProfessorForm/>} />
+       <Route path="/admin/register-materia" element={<SubjectForm />} />
+        <Route path="/admin/materias" element={<SubjectList />} />
       </Route>
 
       {/* 2. RUTA DE PROFESOR */}

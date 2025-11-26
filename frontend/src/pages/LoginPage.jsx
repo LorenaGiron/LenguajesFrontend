@@ -17,19 +17,19 @@ export default function LoginPage() {
     setError("");
 
     try {
-      // 1. Obtiene el rol del usuario 
+      //  Obtiene el rol del usuario 
       const userRole = await login(username, password); 
       
       let redirectTo = "/dashboard"; // Ruta por defecto si el rol no es Admin/Profesor 
       
-      // 2. Lógica de redirección por rol (usando las rutas definidas en AppRoutes)
+      //  Lógica de redirección por rol (usando las rutas definidas en AppRoutes)
       if (userRole === "admin") {
         redirectTo = "/admin/dashboard"; 
       } else if (userRole === "profesor") {
         redirectTo = "/profesor/dashboard"; 
       }
       
-      // 3. Navegar a la ruta decidida
+      // Navegar a la ruta decidida
       navigate(redirectTo);
       
     } catch (err) {
