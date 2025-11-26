@@ -19,7 +19,7 @@ import logo from '../../assets/logo.png';
 
 export default function Sidebar() {
   const { user } = useAuth();
-  const role = user?.role || "alumno";
+  const role = user?.role || "admin";
 
   const [openMenu, setOpenMenu] = useState(null);
 
@@ -38,9 +38,9 @@ export default function Sidebar() {
         title: "Alumnos",
         icon: Users,
         submenu: [
-          { label: "Lista de alumnos", path: "/admin/alumnos" },
-          { label: "Registrar alumno", path: "/admin/alumnos/nuevo" },
-          { label: "Asignar materias", path: "/admin/alumnos/asignar" },
+          { label: "Lista de alumnos", path: "/admin/alumnos?view=list" },
+          { label: "Registrar alumno", path: "/admin/alumnos?view=register" },
+          { label: "Asignar materias", path: "/admin/alumnos?view=assign" },
         ],
       },
       {

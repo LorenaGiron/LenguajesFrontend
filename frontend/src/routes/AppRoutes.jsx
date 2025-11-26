@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 //import { useAuth } from "../context/AuthContext";
 import AdminDashboard from "../pages/DashboardAdmin";
+import AdminPage from "../pages/AdminPage";  
 import TeacherDashboard from "../pages/Dashboardteacher";
 import LoginPage from "../pages/LoginPage";
 import Register from "../pages/Register";
@@ -22,23 +23,18 @@ export default function AppRoutes() {
       <Route path="/login" element={<LoginPage />} />
 
       {/* 1. RUTA DE ADMINISTRADOR */}
-      <Route 
-        path="/admin/dashboard" 
-        element={
-            /*<PrivateRoute>*/
-                <AdminDashboard />
-            /*</PrivateRoute>*/
-        } 
-      />
+      <Route path="/admin" element={<AdminPage />}>
+        
+        {/* Dashboard del admin */}
+        <Route path="dashboard" element={<AdminDashboard />} />
 
-      <Route
-        path="/admin/register"
-        element={
-          /*<PrivateRoute>*/
-            <Register />
-          /*</PrivateRoute>*/
-        }
-      />
+        {/* Alumnos (tu StudentsPage.jsx) */}
+        <Route path="alumnos" element={<StudentsPage />} />
+
+        {/* Registro (si quieres dentro del admin) */}
+        <Route path="register" element={<Register />} />
+
+      </Route>
 
       {/* 2. RUTA DE PROFESOR */}
       <Route 
