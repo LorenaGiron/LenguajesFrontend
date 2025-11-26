@@ -33,11 +33,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    localStorage.removeItem("token"); 
     setUser(null);
-    setRole(null); 
-    setToken(null);
     setIsAuthenticated(false);
-    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
   };
 
   const value = {

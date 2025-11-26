@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage";
 import Register from "../pages/Register";
 import StudentsPage from "../pages/StudentsPage";
 import LandingPage from "../pages/LandingPage";
+
 /*
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
