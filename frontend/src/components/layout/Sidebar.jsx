@@ -39,7 +39,7 @@ export default function Sidebar() {
         icon: Users,
         submenu: [
           { label: "Lista de alumnos", path: "/admin/alumnos?view=list" },
-          { label: "Registrar alumno", path: "/admin/alumnos?view=register" },
+          { label: "Registrar alumno", path: "/admin/register-student" },
           { label: "Asignar materias", path: "/admin/alumnos?view=assign" },
         ],
       },
@@ -47,8 +47,8 @@ export default function Sidebar() {
         title: "Profesores",
         icon: UserCog,
         submenu: [
-          { label: "Lista de profesores", path: "/admin/profesores" },
-          { label: "Registrar profesor", path: "/admin/profesores/nuevo" },
+          { label: "Lista de profesores", path: "/admin/profesores-list" },
+          { label: "Registrar profesor", path: "/admin/register-professor" },
           { label: "Materias impartidas", path: "/admin/profesores/materias" },
         ],
       },
@@ -57,7 +57,7 @@ export default function Sidebar() {
         icon: BookOpen,
         submenu: [
           { label: "Lista de materias", path: "/admin/materias" },
-          { label: "Registrar materia", path: "/admin/materias/nuevo" },
+          { label: "Registrar materia", path: "/admin/register-materia" },
         ],
       },
       {

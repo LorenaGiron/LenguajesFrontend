@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      // 1. Obtener token
+      //  Obtener token
       const tokenResponse = await loginRequest(username, password);
       const receivedToken = tokenResponse.access_token;
 
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", receivedToken);
       setIsAuthenticated(true);
 
-      // 2. Obtener perfil
+      // Obtener perfil
       const profileResponse = await getProfileRequest();
 
       setUser(profileResponse);

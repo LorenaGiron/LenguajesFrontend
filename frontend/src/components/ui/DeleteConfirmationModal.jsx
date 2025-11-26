@@ -24,8 +24,8 @@ const DeleteConfirmationModal = ({ student, onClose, onConfirm }) => {
                         <div>
                             <p className="text-lg font-semibold text-danger">Eliminación Permanente</p>
                             <p className="text-sm text-grisF mt-1">
-                                ¿Estás seguro de que deseas eliminar al alumno 
-                                <span className="font-bold text-azulF"> {studentName}</span>?
+                                ¿Estás seguro de que deseas eliminar
+                                <span className="font-bold text-azulF"></span>?
                             </p>
                             <p className="text-sm text-grisF mt-1">Esta acción no se puede deshacer.</p>
                         </div>
