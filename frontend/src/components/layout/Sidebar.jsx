@@ -1,210 +1,207 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
   UserCog,
-  GraduationCap,
   BookOpen,
+  FileChartColumn,
+  GraduationCap,
   Calendar,
-  FileSpreadsheet,
+  FileText,
+  ClipboardList,
   User,
   ChevronDown,
   ChevronRight,
 } from "lucide-react";
-
-import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-
-// Submenú reutilizable
-const SidebarSection = ({ title, icon: Icon, items }) => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div>
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-4 py-2 text-white hover:bg-azulM/40"
-      >
-        <span className="flex items-center gap-3">
-          {Icon && <Icon size={18} />}
-          {title}
-        </span>
-        {open ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-      </button>
-
-      {open && (
-        <ul className="ml-6 mt-1 space-y-1">
-          {items.map(({ label, path }, idx) => (
-            <li key={idx}>
-              <NavLink
-                to={path}
-                className={({ isActive }) =>
-                  `block px-3 py-1 rounded-md text-sm ${
-                    isActive
-                      ? "bg-azulM text-white"
-                      : "text-azulC hover:bg-azulM/30"
-                  }`
-                }
-              >
-                {label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-};
+import logo from '../../assets/logo.png';
 
 export default function Sidebar() {
-  const { user } = useAuth(); 
-  const role = user?.role || "Alumno"; // por defecto alumno
+  const { user } = useAuth();
+  const role = user?.role || "alumno";
 
-  // ==============================
-  // MENÚS POR ROL
-  // ==============================
-  const menus = {
-    Admin: [
+  const [openMenu, setOpenMenu] = useState(null);
+
+  const toggleMenu = (menu) => {
+    setOpenMenu(openMenu === menu ? null : menu);
+  };
+
+  const menuItems = {
+    admin: [
       {
-        type: "simple",
-        label: "Dashboard",
+        title: "Dashboard",
         icon: LayoutDashboard,
         path: "/admin/dashboard",
       },
       {
-        type: "group",
-        label: "Gestión de Usuarios",
+        title: "Alumnos",
         icon: Users,
-        items: [
-          { label: "Administradores", path: "/admin/usuarios/admins" },
-          { label: "Profesores", path: "/admin/usuarios/profesores" },
-          { label: "Alumnos", path: "/admin/usuarios/alumnos" },
+        submenu: [
+          { label: "Lista de alumnos", path: "/admin/alumnos" },
+          { label: "Registrar alumno", path: "/admin/alumnos/nuevo" },
+          { label: "Asignar materias", path: "/admin/alumnos/asignar" },
         ],
       },
       {
-        type: "group",
-        label: "Gestión Académica",
-        icon: GraduationCap,
-        items: [
-          { label: "Materias", path: "/admin/materias" },
-          { label: "Secciones", path: "/admin/secciones" },
-          { label: "Grupos", path: "/admin/grupos" },
-        ],
-      },
-      {
-        type: "simple",
-        label: "Registrar Usuario",
+        title: "Profesores",
         icon: UserCog,
-        path: "/admin/register",
+        submenu: [
+          { label: "Lista de profesores", path: "/admin/profesores" },
+          { label: "Registrar profesor", path: "/admin/profesores/nuevo" },
+          { label: "Materias impartidas", path: "/admin/profesores/materias" },
+        ],
+      },
+      {
+        title: "Materias",
+        icon: BookOpen,
+        submenu: [
+          { label: "Lista de materias", path: "/admin/materias" },
+          { label: "Registrar materia", path: "/admin/materias/nuevo" },
+        ],
+      },
+      {
+        title: "Reportes",
+        icon: FileText,
+        submenu: [
+          { label: "Boleta individual", path: "/admin/reportes/boleta" },
+          { label: "Estadísticas académicas", path: "/admin/reportes/estadisticas" },
+          { label: "Calificaciones por materia", path: "/admin/reportes/materia" },
+        ],
       },
     ],
 
-    Profesor: [
+    profesor: [
       {
-        type: "simple",
-        label: "Dashboard",
+        title: "Dashboard",
         icon: LayoutDashboard,
         path: "/profesor/dashboard",
       },
       {
-        type: "simple",
-        label: "Mis Materias",
+        title: "Mis Materias",
         icon: BookOpen,
         path: "/profesor/materias",
       },
       {
-        type: "simple",
-        label: "Lista de Alumnos",
+        title: "Alumnos",
         icon: Users,
         path: "/profesor/alumnos",
       },
       {
-        type: "simple",
-        label: "Calificaciones",
-        icon: FileSpreadsheet,
-        path: "/profesor/calificaciones",
+        title: "Calificaciones",
+        icon: ClipboardList,
+        submenu: [
+          { label: "Capturar calificaciones", path: "/profesor/calificaciones/capturar" },
+          { label: "Reporte por alumno", path: "/profesor/calificaciones/alumno" },
+        ],
+      },
+      {
+        title: "Perfil",
+        icon: User,
+        path: "/profesor/perfil",
       },
     ],
 
-    Alumno: [
+    alumno: [
       {
-        type: "simple",
-        label: "Horario",
-        icon: Calendar,
-        path: "/alumno/horario",
+        title: "Dashboard",
+        icon: LayoutDashboard,
+        path: "/alumno/dashboard",
       },
       {
-        type: "simple",
-        label: "Materias",
+        title: "Mis Materias",
         icon: BookOpen,
         path: "/alumno/materias",
       },
       {
-        type: "simple",
-        label: "Calificaciones",
-        icon: FileSpreadsheet,
+        title: "Mis Profesores",
+        icon: UserCog,
+        path: "/alumno/profesores",
+      },
+      {
+        title: "Calificaciones",
+        icon: GraduationCap,
         path: "/alumno/calificaciones",
       },
       {
-        type: "simple",
-        label: "Perfil",
+        title: "Horario",
+        icon: Calendar,
+        path: "/alumno/horario",
+      },
+      {
+        title: "Perfil",
         icon: User,
         path: "/alumno/perfil",
       },
     ],
   };
 
-  const menuForRole = menus[role];
+  const itemsToRender = menuItems[role];
 
   return (
-    <div className="h-screen w-64 bg-azulF text-white flex flex-col shadow-xl">
-
-      {/* Header */}
-      <div className="p-6 border-b border-azulM/40">
-        <h2 className="text-xl font-semibold tracking-wide">{role}</h2>
-        <p className="text-sm text-azulC">Sistema de Gestión Escolar</p>
+    <aside className="w-64 h-screen bg-azulF text-white fixed left-0 top-0 shadow-xl flex flex-col">
+      <div className="flex items-center justify-center gap-2 pb-4 border-b border-azulC">
+        <img 
+          src={logo} 
+          alt="Logo Universidad Prisma" 
+          className="w-40 h-40 object-contain"
+        />
       </div>
 
-      {/* Items */}
-      <nav className="flex-1 p-4 space-y-2">
-        {menuForRole.map((item, i) => {
-          if (item.type === "simple") {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={i}
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+
+        {itemsToRender.map((item, index) => (
+          <div key={index}>
+            {!item.submenu && (
+              <Link
                 to={item.path}
-                className={({ isActive }) =>
-                  `
-                    flex items-center gap-3 px-4 py-2 rounded-lg transition
-                    ${isActive ? "bg-azulM text-white" : "hover:bg-azulM/40"}
-                  `
-                }
+                className="flex items-center gap-3 p-3 rounded-md hover:bg-azulM transition-all"
               >
-                <Icon size={20} />
-                {item.label}
-              </NavLink>
-            );
-          }
+                <item.icon className="w-5 h-5" />
+                <span>{item.title}</span>
+              </Link>
+            )}
 
-          if (item.type === "group") {
-            return (
-              <SidebarSection
-                key={i}
-                title={item.label}
-                icon={item.icon}
-                items={item.items}
-              />
-            );
-          }
+            {item.submenu && (
+              <div>
+                <button
+                  onClick={() => toggleMenu(item.title)}
+                  className="flex justify-between items-center w-full p-3 rounded-md hover:bg-azulM transition-all"
+                >
+                  <span className="flex items-center gap-3">
+                    <item.icon className="w-5 h-5" />
+                    {item.title}
+                  </span>
 
-          return null;
-        })}
+                  {openMenu === item.title ? (
+                    <ChevronDown className="w-4 h-4 transition-transform duration-200" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 transition-transform duration-200" />
+                  )}
+                </button>
+
+                {/* SUBMENÚ DESPLEGABLE */}
+                <div
+                  className={`ml-10 flex flex-col space-y-1 overflow-hidden transition-all duration-300 ${
+                    openMenu === item.title ? "max-h-40" : "max-h-0"
+                  }`}
+                >
+                  {item.submenu.map((sub, i) => (
+                    <Link
+                      key={i}
+                      to={sub.path}
+                      className="p-2 text-sm hover:text-azulC transition-all"
+                    >
+                      {sub.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+
       </nav>
-
-      <div className="p-4 text-sm text-azulC border-t border-azulM/40">
-        Universidad de Guanajuato
-      </div>
-    </div>
+    </aside>
   );
 }
