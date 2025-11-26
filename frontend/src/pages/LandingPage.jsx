@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowRight, Users, BookOpen, BarChart3, Lock, Zap, Globe, Phone, Mail, MapPin } from 'lucide-react';
+import LoginPage from "./LoginPage";
+import { useNavigate } from 'react-router-dom';
 
 // Pequeño componente de animación de contador (si no tienes uno propio)
 function CounterAnimation({ target = 0, duration = 1200 }) {
@@ -24,8 +26,11 @@ function CounterAnimation({ target = 0, duration = 1200 }) {
   return <p className="text-7xl font-extrabold text-white">{value}{value === target ? '+' : ''}</p>;
 }
 
+ 
+
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+ const navigate = useNavigate();
   const [formData, setFormData] = useState({
     institucion: '',
     email: '',
@@ -91,9 +96,9 @@ const [startCounter, setStartCounter] = useState(false);
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="hidden sm:block px-6 py-2 bg-azulM text-grisC font-semibold rounded-full hover:bg-azulM/50 transition duration-300">
-              Iniciar Sesión
-            </button>
+           <button onClick={() => navigate('/login')} className="hidden sm:block px-6 py-2 bg-azulM text-grisC font-semibold rounded-full hover:bg-azulM/50 transition duration-300">
+            Iniciar Sesión
+          </button>
             <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-azulC">
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
