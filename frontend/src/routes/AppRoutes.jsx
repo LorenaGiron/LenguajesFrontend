@@ -5,6 +5,7 @@ import TeacherDashboard from "../pages/Dashboardteacher";
 import LoginPage from "../pages/LoginPage";
 import Register from "../pages/Register";
 import StudentsPage from "../pages/StudentsPage";
+import LandingPage from "../pages/LandingPage";
 /*
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -14,6 +15,9 @@ function PrivateRoute({ children }) {
 export default function AppRoutes() {
   return (
     <Routes>
+         {/* Ruta raíz → LandingPage */}
+      <Route path="/" element={<LandingPage />} />
+      
       <Route path="/login" element={<LoginPage />} />
 
       {/* 1. RUTA DE ADMINISTRADOR */}
