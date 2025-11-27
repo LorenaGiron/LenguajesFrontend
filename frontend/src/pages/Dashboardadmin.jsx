@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
-import Sidebar from "../components/layout/Sidebar";
-import Topbar from "../components/layout/Topbar";
-import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/layout/Sidebar.jsx";
+import Topbar from "../components/layout/Topbar.jsx";
 
 import { getTotalStudents } from "../api/students.api.js";
 import { getTotalSubjects } from "../api/subject.ap.js";
@@ -65,7 +64,7 @@ export default function DashboardAdmin() {
                 <Topbar />
 
                 {/* Contenido principal */}
-                <main className="flex-1 p-8 overflow-y-auto">
+                <main className="flex-1 p-8">
                     <div className="mb-10">
                         <h1 className="text-3xl font-semibold text-azulF">
                             Panel Administrativo
