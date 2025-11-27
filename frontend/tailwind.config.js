@@ -13,7 +13,8 @@ export default {
         grisF: "#737373",         // Gris oscuro
         grisM: "#A3A3A3",         // Gris medio
         grisC: "#f5f5f5",         // Gris claro
-        danger: "#b91c1c",        // Errores
+        rojoC: "#f7180b",         // Rojo claro
+        rojoF: "#9f0712",         // Rojo oscuro
       },
     },
   },

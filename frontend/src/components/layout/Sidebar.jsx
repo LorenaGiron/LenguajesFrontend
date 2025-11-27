@@ -40,7 +40,7 @@ export default function Sidebar() {
         submenu: [
           { label: "Lista de alumnos", path: "/admin/alumnos?view=list" },
           { label: "Registrar alumno", path: "/admin/register-student" },
-          { label: "Asignar materias", path: "/admin/alumnos?view=assign" },
+          { label: "Asignar materias", path: "/admin/assign"  },
         ],
       },
       {
@@ -64,11 +64,11 @@ export default function Sidebar() {
         title: "Reportes",
         icon: FileText,
         submenu: [
-          { label: "Boleta individual", path: "/admin/reportes/boleta" },
-          { label: "Estadísticas académicas", path: "/admin/reportes/estadisticas" },
-          { label: "Calificaciones por materia", path: "/admin/reportes/materia" },
+          { label: "Boleta individual", path: "/admin/reports?view=boleta" },
+          { label: "Estadísticas académicas", path: "/admin/reports?view=estadisticas" },
+          { label: "Calificaciones por materia", path: "/admin/reports?view=calif" },
         ],
-      },
+      }
     ],
 
     profesor: [

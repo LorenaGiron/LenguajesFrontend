@@ -17,6 +17,10 @@ import ProfessorForm from "../components/professors/ProfessorForm";
 import SubjectForm from "../components/subject/SubjectForm";
 import SubjectList from "../pages/SubjectsPage";
 
+import SubjectList from "../pages/SubjectsPage.jsx";
+import ReportsPage from "../pages/ReportsPage.jsx";
+import AssignStudents from "../pages/AssignmentPage.jsx";
+import TeacherAssigment from "../pages/TeacherAssigment.jsx";
 /*
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -37,14 +41,24 @@ export default function AppRoutes() {
         {/* Dashboard del admin */}
         <Route path="dashboard" element={<AdminDashboard />} />
 
-        {/* Alumnos (tu StudentsPage.jsx) */}
+        {/* Alumnos */}
         <Route path="alumnos" element={<StudentsPage />} />
+        <Route path="/admin/assign" element={<AssignStudents />} />
         
         {/* Registro (si quieres dentro del admin) */}
         <Route path="register-student" element={<RegisterStudent />} />
-
+        
+        {/* Profesores */}
         <Route path="profesores-list" element={<TeachersList />} />
         <Route path="register-professor" element={< ProfessorForm/>} />
+        
+        {/* Materias */}
+        <Route path="register-materia" element={<SubjectForm />} />
+        <Route path="materias" element={<SubjectList />} />
+
+        {/* Reportes */}
+        <Route path="/admin/reports" element={<ReportsPage />} />
+        <Route path="profesores/materias" element={< TeacherAssigment/>} />
        <Route path="/admin/register-materia" element={<SubjectForm />} />
         <Route path="/admin/materias" element={<SubjectList />} />
       </Route>

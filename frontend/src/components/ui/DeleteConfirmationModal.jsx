@@ -1,4 +1,5 @@
 import React from 'react';
+import ButtonR from './ButtonRed.jsx';
 
 const DeleteConfirmationModal = ({ student, onClose, onConfirm }) => {
     if (!student) return null;
@@ -40,13 +41,12 @@ const DeleteConfirmationModal = ({ student, onClose, onConfirm }) => {
                     >
                         Cancelar
                     </button>
-                    <button
+                    <ButtonR
                         type="button"
                         onClick={onConfirm}
-                        className="px-4 py-2 bg-danger text-white rounded-md hover:bg-red-700 transition-colors"
-                    >
+                        >
                         Sí, Eliminar
-                    </button>
+                    </ButtonR>
                 </div>
             </div>
         </div>
