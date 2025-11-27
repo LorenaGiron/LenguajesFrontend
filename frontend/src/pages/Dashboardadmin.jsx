@@ -1,7 +1,10 @@
 import Sidebar from "../components/layout/Sidebar";
 import Topbar from "../components/layout/Topbar";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardAdmin() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex h-screen bg-grisC">
       <Sidebar />
@@ -10,7 +13,7 @@ export default function DashboardAdmin() {
         <Topbar />
 
         {/* Contenido principal */}
-        <main className="flex-1 p-8 overflow-y-auto">
+        <main className="flex-1 p-8">
           <div className="mb-10">
             <h1 className="text-3xl font-semibold text-azulF">
               Panel Administrativo
@@ -48,15 +51,24 @@ export default function DashboardAdmin() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <button className="bg-azulF text-white p-5 rounded-xl shadow hover:bg-azulM transition">
+              <button 
+                className="bg-azulF text-white p-5 rounded-xl shadow hover:bg-azulM transition"
+                onClick={() => navigate('/admin/register-student')}
+              >
                 Registrar nuevo estudiante
               </button>
 
-              <button className="bg-azulF text-white p-5 rounded-xl shadow hover:bg-azulM transition">
+              <button 
+                className="bg-azulF text-white p-5 rounded-xl shadow hover:bg-azulM transition"
+                onClick={() => navigate('/admin/register-professor')}
+              >
                 Registrar nuevo profesor
               </button>
 
-              <button className="bg-azulF text-white p-5 rounded-xl shadow hover:bg-azulM transition">
+              <button 
+                className="bg-azulF text-white p-5 rounded-xl shadow hover:bg-azulM transition"
+                onClick={() => navigate('/admin/register-materia')}
+              >
                 Crear nueva materia
               </button>
             </div>
