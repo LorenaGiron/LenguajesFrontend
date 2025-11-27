@@ -2,7 +2,12 @@ import { Routes, Route, Navigate } from "react-router-dom";
 //import { useAuth } from "../context/AuthContext";
 import AdminDashboard from "../pages/DashboardAdmin";
 import AdminPage from "../pages/AdminPage";  
-import TeacherDashboard from "../pages/Dashboardteacher";
+import TeacherLayout from "../pages/TeacherLayout";
+import TeacherDashboard from "../pages/TeacherDashboard";
+import TeacherSubjects from "../pages/TeacherSubjects";
+import TeacherStudents from "../pages/TeacherStudents";
+import TeacherGrades from "../pages/TeacherGrades";
+import TeacherReports from "../pages/TeacherReports";
 import LoginPage from "../pages/LoginPage";
 import RegisterStudent from "../pages/RegisterStudent";
 import StudentsPage from "../pages/StudentsPage";
@@ -10,6 +15,8 @@ import LandingPage from "../pages/LandingPage";
 import TeachersList from "../pages/TeacherPageList";
 import ProfessorForm from "../components/professors/ProfessorForm";
 import SubjectForm from "../components/subject/SubjectForm";
+import SubjectList from "../pages/SubjectsPage";
+
 import SubjectList from "../pages/SubjectsPage.jsx";
 import ReportsPage from "../pages/ReportsPage.jsx";
 import AssignStudents from "../pages/AssignmentPage.jsx";
@@ -38,7 +45,6 @@ export default function AppRoutes() {
         <Route path="alumnos" element={<StudentsPage />} />
         <Route path="/admin/assign" element={<AssignStudents />} />
         
-
         {/* Registro (si quieres dentro del admin) */}
         <Route path="register-student" element={<RegisterStudent />} />
         
@@ -58,15 +64,13 @@ export default function AppRoutes() {
       </Route>
 
       {/* 2. RUTA DE PROFESOR */}
-      <Route 
-        path="/profesor/dashboard" 
-        element={
-            /*<PrivateRoute>*/
-                <TeacherDashboard />
-            /*</PrivateRoute>*/
-        } 
-      />
-
+      <Route path="/profesor" element={<TeacherLayout />}>
+        <Route path="dashboard" element={<TeacherDashboard />} />
+        <Route path="materias" element={<TeacherSubjects />} />
+        <Route path="materias/:id/alumnos" element={<TeacherStudents />} />
+        <Route path="calificaciones" element={<TeacherGrades />} />
+        <Route path="reportes" element={<TeacherReports />} />
+      </Route>
       {/* 3. RUTA DE ALUMNO */}
       <Route 
         path="/alumno/dashboard" 
