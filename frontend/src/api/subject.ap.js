@@ -1,8 +1,5 @@
+const API_BASE_URL = "http://localhost:8000/api/v1";
 
-
-const API_BASE_URL = "http://localhost:8000/api/v1"; 
-
-// Función auxiliar para obtener los encabezados de autenticación
 const getAuthHeaders = (contentType = false) => {
     const token = localStorage.getItem("access_token");
     if (!token) {
@@ -14,7 +11,6 @@ const getAuthHeaders = (contentType = false) => {
     }
     return headers;
 };
-
 
 export const createSubject = async (subjectData) => {
     try {
@@ -79,6 +75,85 @@ export const deleteSubject = async (subjectId) => {
             throw new Error(`Error al eliminar materia: ${response.statusText}`);
         }
         return true;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export async function assignStudentsToSubject(subjectId, studentIds) {
+    try {
+        const headers = getAuthHeaders(true);
+        // NOTA: Reemplacé la llamada a 'api.put' por 'fetch' para ser consistente con el resto del código.
+        const response = await fetch(`${API_BASE_URL}/subjects/${subjectId}/students/`, { 
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify({ student_ids: studentIds }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ detail: "Error desconocido." }));
+            throw new Error(errorData.detail || `Error al asignar estudiantes: ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const removeStudentFromSubject = async (subjectId, studentId) => {
+    try {
+        const headers = getAuthHeaders(false);
+        const response = await fetch(`${API_BASE_URL}/subjects/${subjectId}/students/${studentId}`, {
+            method: 'DELETE',
+            headers: headers,
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ detail: "Error desconocido." }));
+            throw new Error(errorData.detail || `Error al eliminar estudiante de la materia: ${response.statusText}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+export const getTeacherSubjectLoad = async (teacherId = null) => {
+    try {
+        const headers = getAuthHeaders(false);
+        let url = `${API_BASE_URL}/subjects/teacher-load/`;
+        
+        // Si se proporciona un ID de profesor, se añade como query parameter
+        if (teacherId !== null && teacherId !== "") {
+            url += `?teacher_id=${teacherId}`;
+        }
+        
+        const response = await fetch(url, { 
+            headers: headers 
+        });
+        if (!response.ok) {
+            throw new Error(`Error al cargar la carga académica: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getTotalSubjects = async () => { // NUEVA FUNCIÓN
+    try {
+        const headers = getAuthHeaders(false);
+        const response = await fetch(`${API_BASE_URL}/reports/stats/subjects`, { 
+            headers: headers 
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al cargar el total de materias: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.total;
     } catch (error) {
         throw error;
     }

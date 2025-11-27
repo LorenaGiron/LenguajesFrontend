@@ -14,6 +14,8 @@ import SubjectList from "../pages/SubjectsPage.jsx";
 import ReportsPage from "../pages/ReportsPage.jsx";
 import IndividualReport from "../components/students/IndividualReport";
 
+import AssignStudents from "../pages/AssignmentPage.jsx";
+import TeacherAssigment from "../pages/TeacherAssigment.jsx";
 /*
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -36,6 +38,10 @@ export default function AppRoutes() {
 
         {/* Alumnos */}
         <Route path="alumnos" element={<StudentsPage />} />
+        <Route path="/admin/assign" element={<AssignStudents />} />
+        
+
+        {/* Registro (si quieres dentro del admin) */}
         <Route path="register-student" element={<RegisterStudent />} />
         
         {/* Profesores */}
@@ -48,6 +54,9 @@ export default function AppRoutes() {
 
         {/* Reportes */}
         <Route path="/admin/reports" element={<ReportsPage />} />
+        <Route path="profesores/materias" element={< TeacherAssigment/>} />
+       <Route path="/admin/register-materia" element={<SubjectForm />} />
+        <Route path="/admin/materias" element={<SubjectList />} />
       </Route>
 
       {/* 2. RUTA DE PROFESOR */}
