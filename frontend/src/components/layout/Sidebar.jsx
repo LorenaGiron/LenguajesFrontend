@@ -64,9 +64,9 @@ export default function Sidebar() {
         title: "Reportes",
         icon: FileText,
         submenu: [
-          { label: "Boleta individual", path: "/admin/reportes/boleta" },
-          { label: "Estadísticas académicas", path: "/admin/reportes/estadisticas" },
-          { label: "Calificaciones por materia", path: "/admin/reportes/materia" },
+          { label: "Boleta individual", path: "/admin/boleta-individual" },
+          { label: "Estadísticas académicas", path: "/admin/estadisticas" },
+          { label: "Calificaciones por materia", path: "/admin/calif-materia" },
         ],
       },
     ],
