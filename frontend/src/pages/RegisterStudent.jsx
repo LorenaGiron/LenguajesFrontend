@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { createStudent } from "../api/students.api.js"; 
 import FormStatusModal from "../components/ui/StatusModal.jsx";
+import Button from "../components/ui/Button.jsx";
+import ButtonR from "../components/ui/ButtonRed.jsx";
+import Input from "../components/ui/Input.jsx";
 
 const StudentForm = ({ onSuccess }) => {
     const [formData, setFormData] = useState({
@@ -64,13 +67,12 @@ const StudentForm = ({ onSuccess }) => {
                     {/* Nombre(s) */}
                     <div className="space-y-1">
                         <label htmlFor="first_name" className="text-sm font-semibold text-grisF">Nombre(s) *</label>
-                        <input
+                        <Input
                             type="text"
                             id="first_name"
                             name="first_name"
                             value={formData.first_name}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
                             placeholder="Juan" 
                             required
                         />
@@ -78,13 +80,12 @@ const StudentForm = ({ onSuccess }) => {
                     {/* Apellido Paterno */}
                     <div className="space-y-1">
                         <label htmlFor="last_name" className="text-sm font-semibold text-grisF">Apellido Paterno *</label>
-                        <input
+                        <Input
                             type="text"
                             id="last_name"
                             name="last_name"
                             value={formData.last_name}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
                             placeholder="Pérez" 
                             required
                         />
@@ -92,13 +93,12 @@ const StudentForm = ({ onSuccess }) => {
                     {/* Apellido Materno */}
                     <div className="space-y-1">
                         <label htmlFor="last_name2" className="text-sm font-semibold text-grisF">Apellido Materno</label>
-                        <input
+                        <Input
                             type="text"
                             id="last_name2"
                             name="last_name2"
                             value={formData.last_name2}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
                             placeholder="García (Opcional)" 
                         />
                     </div>
@@ -109,44 +109,28 @@ const StudentForm = ({ onSuccess }) => {
                     {/* Email */}
                     <div className="space-y-1">
                         <label htmlFor="email" className="text-sm font-semibold text-grisF">Correo Electrónico *</label>
-                        <input
+                        <Input
                             type="email"
                             id="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
-                            placeholder="juan.perez@universidad.edu" 
+                            placeholder="juan.perez@prisma.com" 
                             required
                         />
                     </div>
                     {/* Matrícula */}
                     <div className="space-y-1">
                         <label htmlFor="enrollment_code" className="text-sm font-semibold text-grisF">Matrícula</label>
-                        <input
+                        <Input
                             type="text"
                             id="enrollment_code"
                             name="enrollment_code"
                             value={formData.enrollment_code}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
                             placeholder="Ej: A2025001 (Opcional)" 
                         />
                     </div>
-                </div>
-
-                {/* . Comentarios/Notas */}
-                <div className="space-y-1">
-                    <label htmlFor="notes" className="text-sm font-semibold text-grisF">Notas / Comentarios Adicionales</label>
-                    <textarea
-                        id="notes"
-                        name="notes"
-                        value={formData.notes}
-                        onChange={handleChange}
-                        rows="4"
-                        placeholder="Escribe cualquier información relevante o nota..."
-                        className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow resize-none"
-                    ></textarea>
                 </div>
 
                 {/* Botón de Registro  */}

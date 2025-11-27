@@ -12,8 +12,6 @@ import ProfessorForm from "../components/professors/ProfessorForm";
 import SubjectForm from "../components/subject/SubjectForm";
 import SubjectList from "../pages/SubjectsPage.jsx";
 import ReportsPage from "../pages/ReportsPage.jsx";
-import IndividualReport from "../components/students/IndividualReport";
-
 import AssignStudents from "../pages/AssignmentPage.jsx";
 import TeacherAssigment from "../pages/TeacherAssigment.jsx";
 /*
