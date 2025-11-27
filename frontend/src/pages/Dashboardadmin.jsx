@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import Sidebar from "../components/layout/Sidebar";
 import Topbar from "../components/layout/Topbar";
+import { useNavigate } from "react-router-dom";
 
 import { getTotalStudents } from "../api/students.api.js";
 import { getTotalSubjects } from "../api/subject.ap.js";
