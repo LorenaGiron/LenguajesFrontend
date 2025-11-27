@@ -86,3 +86,21 @@ export const deleteProfessor = async (userId) => {
         throw error;
     }
 };
+
+
+export const getTotalProfessors = async () => { // NUEVA FUNCIÓN
+    try {
+        const headers = getAuthHeaders(false);
+        const response = await fetch(`${API_BASE_URL}/reports/stats/professors`, { 
+            headers: headers 
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al cargar el total de profesores: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.total;
+    } catch (error) {
+        throw error;
+    }
+};

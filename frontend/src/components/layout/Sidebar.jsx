@@ -40,7 +40,7 @@ export default function Sidebar() {
         submenu: [
           { label: "Lista de alumnos", path: "/admin/alumnos?view=list" },
           { label: "Registrar alumno", path: "/admin/register-student" },
-          { label: "Asignar materias", path: "/admin/alumnos?view=assign" },
+          { label: "Asignar materias", path: "/admin/assign"  },
         ],
       },
       {
