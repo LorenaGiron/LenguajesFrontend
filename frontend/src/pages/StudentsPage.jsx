@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import StudentForm from "../components/students/StudentForm"; 
 import EditStudentModal from "../components/students/EditStudentModal.jsx"; 
-import DeleteConfirmationModal from "../components/students/DeleteConfirmationModal.jsx"; 
+import DeleteConfirmationModal from "../components/ui/DeleteConfirmationModal.jsx"; 
 import ActionStatusModal from "../components/ui/ActionStatusModal.jsx"; // IMPORTAR
 import { getStudents, deleteStudent } from "../api/students.api"; 
+import Button from "../components/ui/Button.jsx";
+import ButtonR from "../components/ui/ButtonRed.jsx";
+import Input from "../components/ui/Input.jsx";
 
 export default function StudentsPage() {
     const [params, setParams] = useSearchParams();
@@ -39,7 +41,7 @@ export default function StudentsPage() {
             setStudentToDelete(null); 
             setReloadList(prev => !prev);
         } catch (err) {
-            // Mostrar modal de error, incluyendo el "Failed to fetch"
+            
             setActionStatus({ status: 'error', message: `No se pudo completar la eliminación. Causa: ${err.message}` });
             
             setStudentToDelete(null); 
@@ -144,14 +146,14 @@ function StudentList({ onEdit, onDeleteRequest }) {
 
                 <div className="relative w-1/3 min-w-80">
                     
-                    <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-grisM" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
 
                     <input
                         type="text"
                         placeholder="Buscar por nombre o email..."
-                        className="w-full pl-10 p-2 border border-gray-300 rounded-lg focus:ring-azulF focus:border-azulF"
+                        className="w-full pl-10 p-2 border border-grisC rounded-lg focus:ring-azulM"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -160,17 +162,17 @@ function StudentList({ onEdit, onDeleteRequest }) {
             
             <table className="w-full border-collapse">
                 <thead>
-                    <tr className="bg-gray-100 text-left">
-                        <th className="p-2 border border-gray-300">ID</th>
-                        <th className="p-2 border border-gray-300">Nombre Completo</th>
-                        <th className="p-2 border border-gray-300">Correo</th>
-                        <th className="p-2 border border-gray-300">Acciones</th>
+                    <tr className="bg-grisC text-left">
+                        <th className="p-2 border border-grisM">ID</th>
+                        <th className="p-2 border border-grisM">Nombre Completo</th>
+                        <th className="p-2 border border-grisM">Correo</th>
+                        <th className="p-2 border border-grisM">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredStudents.length === 0 ? (
                          <tr>
-                            <td colSpan="4" className="p-4 text-center text-gray-500">
+                            <td colSpan="4" className="p-4 text-center text-grisF">
                                 {searchTerm 
                                     ? "No se encontraron alumnos con ese nombre/email." 
                                     : "No hay alumnos registrados."}
@@ -178,27 +180,25 @@ function StudentList({ onEdit, onDeleteRequest }) {
                         </tr>
                     ) : (
                         filteredStudents.map((student) => (
-                            <tr key={student.id} className="hover:bg-gray-50">
-                                <td className="p-2 border border-gray-300">{student.id}</td>
-                                <td className="p-2 border border-gray-300">
+                            <tr key={student.id} className="hover:bg-grisC">
+                                <td className="p-2 border border-grisM">{student.id}</td>
+                                <td className="p-2 border border-grisM">
                                     {student.first_name} {student.last_name} {student.last_name2}
                                 </td>
-                                <td className="p-2 border border-gray-300">{student.email}</td>
-                                <td className="p-2 border border-gray-300 space-x-2">
-                                    <button 
-                                        className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
+                                <td className="p-2 border border-grisM">{student.email}</td>
+                                <td className="p-2 border border-grisM space-x-2">
+                                    <Button 
                                         onClick={() => onEdit(student)}
                                         title="Editar Alumno"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                                    </button>
-                                    <button 
-                                        className="bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors"
+                                    </Button>
+                                    <ButtonR 
                                         onClick={() => handleDeleteClick(student)}
                                         title="Eliminar Alumno"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                    </button>
+                                    </ButtonR>
                                 </td>
                             </tr>
                         ))
@@ -213,7 +213,7 @@ function AssignSubjects() {
     return (
         <div className="bg-white p-6 rounded-xl shadow border">
             <h2 className="text-xl font-semibold mb-6 text-azulF">Asignar materias</h2>
-            <p className="text-gray-500">Funcionalidad deshabilitada temporalmente.</p>
+            <p className="text-grisF">Funcionalidad deshabilitada temporalmente.</p>
         </div>
     );
 }

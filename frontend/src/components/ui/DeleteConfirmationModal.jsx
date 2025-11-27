@@ -1,4 +1,5 @@
 import React from 'react';
+import ButtonR from './ButtonRed.jsx';
 
 const DeleteConfirmationModal = ({ student, onClose, onConfirm }) => {
     if (!student) return null;
@@ -24,8 +25,8 @@ const DeleteConfirmationModal = ({ student, onClose, onConfirm }) => {
                         <div>
                             <p className="text-lg font-semibold text-danger">Eliminación Permanente</p>
                             <p className="text-sm text-grisF mt-1">
-                                ¿Estás seguro de que deseas eliminar al alumno 
-                                <span className="font-bold text-azulF"> {studentName}</span>?
+                                ¿Estás seguro de que deseas eliminar
+                                <span className="font-bold text-azulF"></span>?
                             </p>
                             <p className="text-sm text-grisF mt-1">Esta acción no se puede deshacer.</p>
                         </div>
@@ -40,13 +41,12 @@ const DeleteConfirmationModal = ({ student, onClose, onConfirm }) => {
                     >
                         Cancelar
                     </button>
-                    <button
+                    <ButtonR
                         type="button"
                         onClick={onConfirm}
-                        className="px-4 py-2 bg-danger text-white rounded-md hover:bg-red-700 transition-colors"
-                    >
+                        >
                         Sí, Eliminar
-                    </button>
+                    </ButtonR>
                 </div>
             </div>
         </div>
