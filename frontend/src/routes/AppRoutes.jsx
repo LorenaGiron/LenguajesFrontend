@@ -12,6 +12,7 @@ import ProfessorForm from "../components/professors/ProfessorForm";
 import SubjectForm from "../components/subject/SubjectForm";
 import SubjectList from "../pages/SubjectsPage.jsx";
 import ReportsPage from "../pages/ReportsPage.jsx";
+import IndividualReport from "../components/students/IndividualReport";
 
 /*
 function PrivateRoute({ children }) {
@@ -46,7 +47,7 @@ export default function AppRoutes() {
         <Route path="materias" element={<SubjectList />} />
 
         {/* Reportes */}
-        <Route path="boleta-individual" element={<ReportsPage view="boleta"/>} />
+        <Route path="/admin/reports" element={<ReportsPage />} />
       </Route>
 
       {/* 2. RUTA DE PROFESOR */}
