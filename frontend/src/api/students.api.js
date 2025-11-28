@@ -117,3 +117,40 @@ export const getTotalStudents = async () => { // NUEVA FUNCIÓN
         throw error;
     }
 };
+
+export const getStudentGradesReport = async (identifier) => {
+    try {
+        const headers = getAuthHeaders(false);
+        const response = await fetch(`${API_BASE_URL}/reports/student-grades-search/${identifier}`, { 
+            headers: headers 
+        });
+
+        if (response.status === 404) {
+             throw new Error("Alumno no encontrado.");
+        }
+        if (!response.ok) {
+            throw new Error(`Error al cargar el reporte de notas: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+export const searchStudents = async (query) => {
+    try {
+        const headers = getAuthHeaders(false);
+        const response = await fetch(`${API_BASE_URL}/students/search?q=${encodeURIComponent(query)}`, { 
+            headers: headers 
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al buscar sugerencias: ${response.status}`);
+        }
+        return await response.json(); 
+    } catch (error) {
+        console.error("Error in searchStudents:", error);
+        return [];
+    }
+};
