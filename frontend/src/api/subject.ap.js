@@ -158,3 +158,21 @@ export const getTotalSubjects = async () => { // NUEVA FUNCIÓN
         throw error;
     }
 };
+
+
+
+export const getSubjectGradesReport = async (subjectId) => {
+    try {
+        const headers = getAuthHeaders(false);
+        const response = await fetch(`${API_BASE_URL}/reports/subject-grades/${subjectId}`, { 
+            headers: headers 
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al cargar el reporte de notas: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};

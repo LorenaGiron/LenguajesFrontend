@@ -13,6 +13,7 @@ import SubjectForm from "../components/subject/SubjectForm";
 import SubjectList from "../pages/SubjectsPage.jsx";
 import ReportsPage from "../pages/ReportsPage.jsx";
 import IndividualReport from "../components/students/IndividualReport";
+import GradeSubject from "../pages/GradeSubjectReportAdmin.jsx";
 
 import AssignStudents from "../pages/AssignmentPage.jsx";
 import TeacherAssigment from "../pages/TeacherAssigment.jsx";
@@ -57,6 +58,7 @@ export default function AppRoutes() {
         <Route path="profesores/materias" element={< TeacherAssigment/>} />
        <Route path="/admin/register-materia" element={<SubjectForm />} />
         <Route path="/admin/materias" element={<SubjectList />} />
+        <Route path="/admin/reports/subject-grades" element={<GradeSubject />} />
       </Route>
 
       {/* 2. RUTA DE PROFESOR */}
