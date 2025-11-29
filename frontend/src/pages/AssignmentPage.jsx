@@ -180,7 +180,7 @@ export default function GlobalAssignmentPage() {
 
             <div className="mb-6">
                 <h1 className="text-3xl font-bold text-azulF">
-                    Gestión Global de Asignaciones
+                    Gestión y asignación de materias
                 </h1>
             </div>
 
@@ -202,13 +202,13 @@ export default function GlobalAssignmentPage() {
                 <div className="col-span-1 bg-white p-6 rounded-lg shadow-md border">
                     <div className="flex justify-between items-center mb-4 border-b pb-2">
                         <h2 className="text-xl font-semibold">
-                            Alumnos por Materia Seleccionada
+                            Alumnos por materia seleccionada
                         </h2>
 
                         <button
                             onClick={handleExportCSV}
                             className={`flex items-center text-sm px-3 py-1 rounded-lg transition duration-150 
-                                    ${selectedSubject ? 'bg-green-600 text-white hover:bg-green-700' :
+                                    ${selectedSubject ? 'bg-lime-700 text-white hover:bg-lime-600' :
                                     'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
                             disabled={!selectedSubject}
                         >
@@ -224,7 +224,7 @@ export default function GlobalAssignmentPage() {
                         />
                     ) : (
                         <p className="text-gray-500 italic">
-                            Selecciona una materia en la tabla izquierda.
+                            Selecciona una materia para ver los alumnos asignados.
                         </p>
                     )}
                 </div>
@@ -260,7 +260,7 @@ export default function GlobalAssignmentPage() {
 
 
 const SubjectTable = ({ subjects, onSelect, onAssign }) => (
-    <table className="w-full border-collapse text-sm">
+    <table className="w-full border-collapse border border-grisM text-sm">
         <thead>
             <tr className="bg-gray-100 text-left">
                 <th className="p-2 border">Materia</th>
@@ -271,7 +271,7 @@ const SubjectTable = ({ subjects, onSelect, onAssign }) => (
         </thead>
         <tbody>
             {subjects.map(subject => (
-                <tr key={subject.id} className="hover:bg-gray-50">
+                <tr key={subject.id} className="hover:bg-grisC">
                     <td className="p-2 border cursor-pointer"
                         onClick={() => onSelect(subject)}>
                         {subject.name}
@@ -335,7 +335,7 @@ const AssignedStudentsTable = ({ subject, students, onRemoveRequest }) => (
                             <td className="p-2 border text-center">
                                 <button
                                     onClick={() => onRemoveRequest(student)}
-                                    className="bg-red-600 text-white p-1 rounded-full hover:bg-red-700"
+                                    className="bg-red-700 text-white p-1 rounded-full hover:bg-red-600"
                                     title="Remover Alumno"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>

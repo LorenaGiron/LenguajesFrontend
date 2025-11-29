@@ -157,10 +157,10 @@ function SubjectList({ onEdit, onDeleteRequest }) {
             <table className="w-full border-collapse">
                 <thead>
                     <tr className="bg-gray-100 text-left">
-                        <th className="p-2 border border-gray-300">ID</th>
-                        <th className="p-2 border border-gray-300">Materia</th>
-                        <th className="p-2 border border-gray-300">Profesor Asignado</th>
-                        <th className="p-2 border border-gray-300">Acciones</th>
+                        <th className="p-2 border border-grisM">ID</th>
+                        <th className="p-2 border border-grisM">Materia</th>
+                        <th className="p-2 border border-grisM">Profesor Asignado</th>
+                        <th className="p-2 border border-grisM">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -175,22 +175,22 @@ function SubjectList({ onEdit, onDeleteRequest }) {
                     ) : (
                         filteredSubjects.map((subject) => (
                             <tr key={subject.id} className="hover:bg-gray-50">
-                                <td className="p-2 border border-gray-300">{subject.id}</td>
-                                <td className="p-2 border border-gray-300">{subject.name}</td>
-                                <td className="p-2 border border-gray-300">
+                                <td className="p-2 border border-grisM">{subject.id}</td>
+                                <td className="p-2 border border-grisM">{subject.name}</td>
+                                <td className="p-2 border border-grisM">
                                   
                                     {subject.teacher?.full_name || 'N/A'}
                                 </td>
-                                <td className="p-2 border border-gray-300 space-x-2">
+                                <td className="p-2 border border-grisM space-x-2">
                                     <button 
-                                        className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
+                                        className="bg-azulF text-white p-2 rounded hover:bg-azulM transition-colors"
                                         onClick={() => onEdit(subject)}
                                         title="Editar Materia"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                     </button>
                                     <button 
-                                        className="bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors"
+                                        className="bg-rojoF text-white p-2 rounded hover:bg-rojoC transition-colors"
                                         onClick={() => handleDeleteClick(subject)}
                                         title="Eliminar Materia"
                                     >

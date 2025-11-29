@@ -138,7 +138,7 @@ const StudentForm = ({ onSuccess }) => {
                     <button
                         type="submit"
                         // 
-                        className="w-full h-14 bg-azulF text-white font-bold rounded-lg hover:bg-gray transition-colors shadow-md disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
+                        className="w-full h-14 bg-azulF text-white font-bold rounded-lg hover:bg-azulM transition-colors shadow-md disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
                         disabled={loading}
                         title="Registrar Nuevo Alumno"
                     >

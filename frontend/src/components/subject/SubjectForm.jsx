@@ -84,7 +84,7 @@ const SubjectForm = ({ onSuccess }) => {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
+                        className="w-full px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                         placeholder="Ej: Cálculo Diferencial" 
                         required
                     />
@@ -101,7 +101,7 @@ const SubjectForm = ({ onSuccess }) => {
                                 name="teacher_id"
                                 value={formData.teacher_id}
                                 onChange={handleChange}
-                                className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow bg-white"
+                                className="w-full px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                                 required
                                 disabled={professors.length === 0}
                             >
