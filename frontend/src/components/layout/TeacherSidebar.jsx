@@ -51,11 +51,6 @@ export default function TeacherSidebar() {
           description: "Registrar notas de estudiantes"
         },
         { 
-          label: "Consultar calificaciones", 
-          path: "/profesor/calificaciones/consultar",
-          description: "Ver historial de calificaciones"
-        },
-        { 
           label: "Reporte por alumno", 
           path: "/profesor/calificaciones/reporte-alumno",
           description: "Desempeño individual del estudiante"
@@ -100,7 +95,7 @@ export default function TeacherSidebar() {
 
       {/* Usuario actual */}
       <div className="px-4 py-3 border-b border-azulC bg-azulM">
-        <p className="text-xs text-azulC">👤 Profesor</p>
+        <p className="text-xs text-azulC">Profesor</p>
         <p className="text-sm font-semibold truncate">{user?.full_name || "Usuario"}</p>
       </div>
 
@@ -155,7 +150,7 @@ export default function TeacherSidebar() {
                       className="p-2 text-xs hover:text-azulC hover:bg-azulM/30 rounded transition-all duration-200"
                       title={sub.description}
                     >
-                      • {sub.label}
+                       {sub.label}
                     </Link>
                   ))}
                 </div>
