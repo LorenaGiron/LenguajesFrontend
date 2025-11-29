@@ -4,11 +4,11 @@ const ActionStatusModal = ({ status, message, onClose }) => {
     if (!status) return null;
 
     const isSuccess = status === 'success';
-    const bgColor = isSuccess ? 'bg-green-100' : 'bg-red-100';
+    const bgColor = isSuccess ? 'bg-green-200' : 'bg-red-200';
     const borderColor = isSuccess ? 'border-green-600' : 'border-danger';
     const textColor = isSuccess ? 'text-green-800' : 'text-danger';
     const iconColor = isSuccess ? 'text-green-600' : 'text-danger';
-    const title = isSuccess ? 'Operación Exitosa' : 'Error en la Acción';
+    const title = isSuccess ? 'Operación Exitosa' : 'Error';
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={onClose}>
@@ -32,11 +32,11 @@ const ActionStatusModal = ({ status, message, onClose }) => {
                     <p className="text-grisF">{message}</p>
                 </div>
                 
-                <div className="px-5 py-3 bg-gray-50 flex justify-end border-t">
+                <div className="px-5 py-3 bg-grisC flex justify-end border-t">
                     <button
                         type="button"
                         onClick={onClose}
-                        className="px-4 py-2 bg-azulM text-white rounded-md hover:bg-azulF transition-colors"
+                        className="px-4 py-2 bg-azulF text-white rounded-md hover:bg-azulM transition-colors"
                     >
                         Cerrar
                     </button>

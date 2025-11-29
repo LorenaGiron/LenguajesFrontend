@@ -77,7 +77,7 @@ const ProfessorForm = ({ onSuccess }) => {
                             name="full_name"
                             value={formData.full_name}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
+                            className="w-full px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                             placeholder="Ej: Dra. Alicia Hernández" 
                             required
                         />
@@ -91,7 +91,7 @@ const ProfessorForm = ({ onSuccess }) => {
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
+                            className="w-full px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                             placeholder="alicia.hdez@universidad.edu" 
                             required
                         />
@@ -109,7 +109,7 @@ const ProfessorForm = ({ onSuccess }) => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
+                            className="w-full px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                             placeholder="Debe tener al menos 8 caracteres" 
                             required
                         />
@@ -123,7 +123,7 @@ const ProfessorForm = ({ onSuccess }) => {
                             name="confirmPassword"
                             value={formData.confirmPassword}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow"
+                            className="w-full px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                             placeholder="Repita la contraseña" 
                             required
                         />
@@ -139,7 +139,7 @@ const ProfessorForm = ({ onSuccess }) => {
                             name="role"
                             value={formData.role}
                             onChange={handleChange}
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM focus:border-azulM transition-shadow bg-white"
+                            className="w-full px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                         >
                             <option value="profesor">Profesor</option>
                             <option value="admin">Administrador</option>

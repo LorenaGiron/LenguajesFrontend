@@ -106,7 +106,6 @@ export default function GlobalAssignmentPage() {
                 message: `El alumno '${studentName}' ha sido removido de la materia '${subjectName}' correctamente.`
                 
             });
-             window.location.reload();
 
         } catch (err) {
             setActionStatus({ 
@@ -230,7 +229,6 @@ export default function GlobalAssignmentPage() {
                 </div>
             </div>
 
-
             {subjectToAssign && (
                 <AssignmentModal
                     subject={subjectToAssign}
@@ -239,6 +237,7 @@ export default function GlobalAssignmentPage() {
                     onClose={handleCloseModal}
                     onSuccess={handleAssignmentSuccess}
                     assignApi={assignStudentsToSubject}
+                    onStatus={setActionStatus}
                 />
             )}
             
