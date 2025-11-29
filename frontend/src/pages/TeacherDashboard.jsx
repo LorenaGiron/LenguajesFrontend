@@ -230,6 +230,7 @@ export default function TeacherDashboard() {
 
   return (
     <div className="p-8">
+
       <div className="mb-8 flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-semibold text-azulF">
@@ -242,82 +243,90 @@ export default function TeacherDashboard() {
         
         <button
             onClick={handleToggleCalendar}
-            className="p-3 rounded-full bg-azulM text-white shadow-lg hover:bg-azulF transition-colors"
+            className="p-3 rounded-full bg-azulF text-white shadow-lg hover:bg-azulM transition-colors"
             title="Mostrar/Ocultar Calendario"
         >
             <Calendar size={24} />
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        
-        <div className="bg-white p-6 rounded-xl shadow border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-grisF font-medium">Mis Materias</p>
-              <h2 className="text-4xl font-bold text-azulF mt-2">
-                {stats.totalSubjects}
-              </h2>
-            </div>
-            <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
-              <BookOpen className="h-6 w-6 text-azulM" />
-            </div>
-          </div>
-        </div>
-        
-        <div className="bg-white p-6 rounded-xl shadow border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-grisF font-medium">Total Alumnos</p>
-              <h2 className="text-4xl font-bold text-azulF mt-2">
-                {stats.totalStudents}
-              </h2>
-            </div>
-            <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
-              <Users className="h-6 w-6 text-azulM" />
-            </div>
-          </div>
-        </div>
+      {/* Tarjetas de estadísticas */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
 
-        <div className="bg-white p-6 rounded-xl shadow border border-gray-200">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-grisF font-medium">Calificaciones Pendientes</p>
-              <h2 className="text-4xl font-bold text-red-600 mt-2">
-                {stats.pendingGrades}
-              </h2>
-            </div>
-            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-              <ClipboardList className="h-6 w-6 text-red-600" />
-            </div>
+          <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+              <div className="flex items-center justify-between">
+                  <div>
+                      <p className="text-azulF text-xl font-semibold">Mis Materias</p>
+                      <p className="text-4xl font-bold mt-3 text-gray-700">{stats.totalSubjects}</p>
+                      <p className="text-sm text-gray-500 mt-1">Asignadas este ciclo</p>
+                  </div>
+
+                  <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
+                      <BookOpen className="h-6 w-6 text-azulF" />
+                  </div>
+              </div>
           </div>
-        </div>
+
+          <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+              <div className="flex items-center justify-between">
+                  <div>
+                      <p className="text-azulF text-xl font-semibold">Total Alumnos</p>
+                      <p className="text-4xl font-bold mt-3 text-gray-700">{stats.totalStudents}</p>
+                      <p className="text-sm text-gray-500 mt-1">Inscritos en las materias</p>
+                  </div>
+
+                  <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
+                      <Users className="h-6 w-6 text-azulF" />
+                  </div>
+              </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+              <div className="flex items-center justify-between">
+                  <div>
+                      <p className="text-azulF text-xl font-semibold">Calificaciones Pendientes</p>
+                      <p className="text-4xl font-bold text-azulF mt-3">{stats.pendingGrades}</p>
+                      <p className="text-sm text-gray-500 mt-1">Por revisar o capturar</p>
+                  </div>
+
+                  <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
+                      <ClipboardList className="h-6 w-6 text-azulF" />
+                  </div>
+              </div>
+          </div>
+
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow border mb-8">
-        <h2 className="text-xl font-semibold text-azulF mb-4">Acciones Rápidas</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Acciones rápidas */}
+      <section>
+        <h2 className="text-2xl font-semibold text-azulF mb-4">Acciones Rápidas</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
           <a
             href="/profesor/calificaciones/capturar"
-            className="p-4 bg-azulF text-white rounded-lg hover:bg-azulM transition text-center font-medium flex items-center justify-center gap-2"
+            className="bg-azulF text-white p-5 rounded-xl shadow hover:bg-azulM transition text-center font-medium block"
           >
-             <ClipboardList size={20} /> Capturar Calificaciones
+            Capturar Calificaciones
           </a>
+
           <a
             href="/profesor/alumnos"
-            className="p-4 bg-azulF text-white rounded-lg hover:bg-azulM transition text-center font-medium flex items-center justify-center gap-2"
+            className="bg-azulF text-white p-5 rounded-xl shadow hover:bg-azulM transition text-center font-medium block"
           >
-             <Users size={20} /> Ver Alumnos
+            Ver Alumnos
           </a>
+
           <a
             href="/profesor/reportes/materia"
-            className="p-4 bg-azulF text-white rounded-lg hover:bg-azulM transition text-center font-medium flex items-center justify-center gap-2"
+            className="bg-azulF text-white p-5 rounded-xl shadow hover:bg-azulM transition text-center font-medium block"
           >
-             <TrendingUp size={20} /> Ver Reportes
+            Ver Reportes
           </a>
+
         </div>
-      </div>
-      
+      </section>
+
       {/* Renderizado Condicional del Calendario */}
       {isCalendarVisible && <TeacherCalendar />}
 
