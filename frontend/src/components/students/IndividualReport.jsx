@@ -105,10 +105,6 @@ export default function StudentGradesPage() {
 
     return (
         <div className="p-8">
-            <h1 className="text-3xl font-semibold text-azulF mb-8 flex items-center gap-3">
-                <GraduationCap size={28} /> Consulta de Calificaciones por Alumno
-            </h1>
-
             <div className="bg-white p-6 rounded-xl shadow border mb-8">
                 <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row gap-4 items-end relative">
                     <div className="flex-1 w-full relative">
@@ -121,15 +117,14 @@ export default function StudentGradesPage() {
                             value={searchTerm}
                             onChange={handleInputChange}
                             placeholder="Ej: juan.perez@email.com"
-                            className="w-full p-3 border-2 border-grisM/50 rounded-lg focus:ring-2 focus:ring-azulM"
-                            required
+                            className="px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                             autoComplete="off"
                         />
 
                         {/* SUGERENCIAS */}
                         <div className="absolute w-full mt-1 z-10">
                             {searchTerm.length >= 3 && !report && (
-                                <div className="bg-white border border-gray-300 rounded-lg shadow-lg max-h-64 overflow-y-auto">
+                                <div className="bg-white border border-grisM rounded-lg shadow-lg max-h-64 overflow-y-auto">
 
                                     {loading && (
                                         <p className="p-3 text-sm text-gray-500">

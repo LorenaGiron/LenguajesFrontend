@@ -16,12 +16,16 @@ import TeachersList from "../pages/TeacherPageList";
 import ProfessorForm from "../components/professors/ProfessorForm";
 import SubjectForm from "../components/subject/SubjectForm";
 import SubjectList from "../pages/SubjectsPage";
+import TeacherStudentListPage from "../pages/TeacherStudentList.jsx";
 import ReportsPage from "../pages/ReportsPage.jsx";
 import IndividualReport from "../components/students/IndividualReport";
 import GradeSubject from "../pages/GradeSubjectReportAdmin.jsx";
-
+import TeacherAssignGrade from "../pages/TeacherAssignGrade.jsx";
 import AssignStudents from "../pages/AssignmentPage.jsx";
 import TeacherAssigment from "../pages/TeacherAssigment.jsx";
+import TeacherStatsSubjects from "../pages/TeacherStatsSubject.jsx";
+import TeacherSummaryReport from "../pages/TeacherSummaryReport.jsx";
+import TeacherProfile from "../pages/TeacherProfile";
 /*
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -72,6 +76,11 @@ export default function AppRoutes() {
         <Route path="materias/:id/alumnos" element={<TeacherStudents />} />
         <Route path="calificaciones" element={<TeacherGrades />} />
         <Route path="reportes" element={<TeacherReports />} />
+        <Route path="perfil" element={<TeacherProfile />} />
+        <Route path="/profesor/alumnos" element ={<TeacherStudentListPage />} />
+        <Route path="/profesor/calificaciones/capturar" element ={<TeacherAssignGrade />} />
+        <Route path="/profesor/reportes/materia" element ={<TeacherStatsSubjects />} />
+        <Route path="/profesor/reportes/resumen" element ={<TeacherSummaryReport />} />
       </Route>
       {/* 3. RUTA DE ALUMNO */}
       <Route 
