@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function AssignmentModal({ subject, currentStudents, allStudents, onClose, onSuccess, assignApi }) {
+export default function AssignmentModal({ subject, currentStudents, allStudents, onClose, onSuccess, assignApi, onStatus }) {
 
     const [selectedStudentIds, setSelectedStudentIds] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -38,12 +38,23 @@ export default function AssignmentModal({ subject, currentStudents, allStudents,
 
             const updatedSubject = await assignApi(subject.id, finalStudentList);
 
-            alert(`Estudiantes asignados a "${subject.name}" con éxito.`);
-
             onSuccess(updatedSubject);
+
+            onStatus({ 
+                status: 'success', 
+                message: `Estudiantes asignados a "${subject.name}" con éxito.` 
+            });
+
             onClose();
         } catch (err) {
-            setError("Error al guardar la asignación: " + (err.response?.data?.detail || err.message));
+            const msg = "Error al asignar estudiantes: " + (err.response?.data?.detail || err.message);
+
+            onStatus({
+                status: "error",
+                message: msg
+            });
+
+            setError(msg);
         } finally {
             setLoading(false);
         }
