@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { getSubjectsForTeacher } from "../api/grades.api";
+import { getTeacherSubjectLoad } from "../api/subject.ap.js";
+import { getGradesBySubject } from "../api/grades.api";
+import { Users, BookOpen, ClipboardList, TrendingUp } from "lucide-react";
 
 export default function TeacherDashboard() {
   const { user } = useAuth();
@@ -16,18 +18,34 @@ export default function TeacherDashboard() {
     const loadData = async () => {
       setLoading(true);
       try {
-        // Obtener materias del profesor
-        const subjectsData = await getSubjectsForTeacher();
+        const subjectsData = await getTeacherSubjectLoad();
         setSubjects(subjectsData || []);
         
-        // Calcular estadísticas
+        let totalPending = 0;
+        
+        const gradesPromises = subjectsData.map(subject => 
+            getGradesBySubject(subject.id).catch(() => ([]))
+        );
+
+        const allGrades = await Promise.all(gradesPromises);
+
+        subjectsData.forEach((subject, index) => {
+            const enrolledStudents = subject.students || [];
+            const gradesForSubject = allGrades[index] || [];
+            
+            const studentsGradedIds = new Set(gradesForSubject.map(g => g.student_id));
+            
+            const pendingForSubject = enrolledStudents.length - studentsGradedIds.size;
+            totalPending += pendingForSubject;
+        });
+
         setStats({
           totalSubjects: subjectsData?.length || 0,
-          totalStudents: subjectsData?.reduce((acc, s) => acc + (s.students?.length || 0), 0) || 0,
-          pendingGrades: 0, // TODO: obtener del backend
+          totalStudents: subjectsData?.reduce((acc, s) => acc + (s.student_count || 0), 0) || 0,
+          pendingGrades: totalPending,
         });
       } catch (err) {
-        console.error("Error cargando dashboard:", err);
+        console.error("Error cargando dashboard o notas pendientes:", err);
       } finally {
         setLoading(false);
       }
@@ -45,7 +63,6 @@ export default function TeacherDashboard() {
 
   return (
     <div className="p-8">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-semibold text-azulF">
           Bienvenido, {user?.full_name}
@@ -55,10 +72,8 @@ export default function TeacherDashboard() {
         </p>
       </div>
 
-      {/* Tarjetas de Estadísticas */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         
-        {/* Mis Materias */}
         <div className="bg-white p-6 rounded-xl shadow border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
@@ -68,14 +83,11 @@ export default function TeacherDashboard() {
               </h2>
             </div>
             <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-azulC" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C6.5 6.253 2 10.998 2 17s4.5 10.747 10 10.747c5.5 0 10-4.996 10-10.747S17.5 6.253 12 6.253z" />
-              </svg>
+              <BookOpen className="h-6 w-6 text-azulM" />
             </div>
           </div>
         </div>
 
-        {/* Total Alumnos */}
         <div className="bg-white p-6 rounded-xl shadow border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
@@ -84,71 +96,79 @@ export default function TeacherDashboard() {
                 {stats.totalStudents}
               </h2>
             </div>
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 8.646 4 4 0 010-8.646M9 9H3v12a6 6 0 0012 0v-3m0 0h6v-3a6 6 0 00-6-6m0 0V4m0 6v3" />
-              </svg>
+            <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
+              <Users className="h-6 w-6 text-azulM" />
             </div>
           </div>
         </div>
 
-        {/* Calificaciones Pendientes */}
         <div className="bg-white p-6 rounded-xl shadow border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-grisF font-medium">Calificaciones Pendientes</p>
-              <h2 className="text-4xl font-bold text-azulF mt-2">
+              <h2 className="text-4xl font-bold text-red-600 mt-2">
                 {stats.pendingGrades}
               </h2>
             </div>
-            <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+              <ClipboardList className="h-6 w-6 text-red-600" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Acciones Rápidas */}
       <div className="bg-white p-6 rounded-xl shadow border mb-8">
         <h2 className="text-xl font-semibold text-azulF mb-4">Acciones Rápidas</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <a
             href="/profesor/calificaciones/capturar"
-            className="p-4 bg-azulM text-white rounded-lg hover:bg-azulF transition text-center font-medium"
+            className="p-4 bg-azulF text-white rounded-lg hover:bg-azulM transition text-center font-medium flex items-center justify-center gap-2"
           >
-            ✏️ Capturar Calificaciones
+             <ClipboardList size={20} /> Capturar Calificaciones
           </a>
           <a
             href="/profesor/alumnos"
-            className="p-4 bg-azulM text-white rounded-lg hover:bg-azulF transition text-center font-medium"
+            className="p-4 bg-azulF text-white rounded-lg hover:bg-azulM transition text-center font-medium flex items-center justify-center gap-2"
           >
-            👥 Ver Alumnos
+             <Users size={20} /> Ver Alumnos
           </a>
           <a
             href="/profesor/reportes/materia"
-            className="p-4 bg-azulM text-white rounded-lg hover:bg-azulF transition text-center font-medium"
+            className="p-4 bg-azulF text-white rounded-lg hover:bg-azulM transition text-center font-medium flex items-center justify-center gap-2"
           >
-            📊 Ver Reportes
+             <TrendingUp size={20} /> Ver Reportes
           </a>
         </div>
       </div>
 
-     {/* Lista de Materias */}
 <div className="bg-white p-6 rounded-xl shadow border mb-8">
   <h2 className="text-xl font-semibold text-azulF mb-4">Mis Materias</h2>
 
   {subjects.length === 0 ? (
     <p className="text-grisF">No tienes materias asignadas.</p>
   ) : (
-    <ul className="list-disc ml-6">
-      {subjects.map((subject) => (
-        <li key={subject.id} className="text-azulF">
-          {subject.name}
-        </li>
-      ))}
-    </ul>
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse">
+          <thead>
+              <tr className="bg-gray-100 text-left border-b">
+                  <th className="p-3 text-left font-semibold text-gray-700">Materia</th>
+                  <th className="p-3 text-center font-semibold text-gray-700 w-40">Alumnos Inscritos</th>
+              </tr>
+          </thead>
+          <tbody>
+              {subjects.map((subject) => (
+                  <tr key={subject.id} className="hover:bg-gray-50 border-b">
+                      <td className="p-3 font-medium text-azulF">
+                          {subject.name}
+                      </td>
+                      <td className="p-3 text-center text-gray-700 font-bold">
+                          {subject.student_count}
+                      </td>
+                  </tr>
+              ))}
+          </tbody>
+      </table>
+    </div>
   )}
 </div>
 

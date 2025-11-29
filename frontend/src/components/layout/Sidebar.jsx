@@ -66,7 +66,7 @@ export default function Sidebar() {
         submenu: [
           { label: "Boleta individual", path: "/admin/reports?view=boleta" },
           { label: "Estadísticas académicas", path: "/admin/reports?view=estadisticas" },
-          { label: "Calificaciones por materia", path: "/admin/reports?view=calif" },
+          { label: "Calificaciones por materia", path: "/admin/reports/subject-grades" },
         ],
       }
     ],
