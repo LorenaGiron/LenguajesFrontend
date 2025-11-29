@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, Download, GraduationCap } from "lucide-react";
 import { getStudentGradesReport, searchStudents } from "../../api/students.api.js";
+import ActionStatusModal from "../ui/ActionStatusModal.jsx";
 
 export default function StudentGradesPage() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -8,6 +9,8 @@ export default function StudentGradesPage() {
     const [report, setReport] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [modalStatus, setModalStatus] = useState(null);
+    const [modalMessage, setModalMessage] = useState("");
 
     // BUSQUEDA CON DEBOUNCE
     useEffect(() => {
@@ -50,7 +53,6 @@ export default function StudentGradesPage() {
 
     const handleInputChange = (e) => setSearchTerm(e.target.value);
 
-    // CORREGIDO ✔
     const handleSuggestionClick = (student) => {
         // hacemos la búsqueda por email (único y seguro)
         fetchReport(student.email);
@@ -62,12 +64,20 @@ export default function StudentGradesPage() {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        if (!searchTerm.trim()) return;
+        if (!searchTerm.trim()) {
+            setError("Por favor completa el campo de búsqueda.");
+            return;
+        }
+
         fetchReport(searchTerm.trim());
     };
 
     const handleExportCSV = () => {
-        if (!report || report.grades.length === 0) return alert("No hay datos para exportar.");
+        if (!report || report.grades.length === 0) {
+            setModalStatus("error");
+            setModalMessage("Este alumno aún no tiene calificaciones registradas. No es posible generar el archivo CSV.");
+            return;
+        }
 
         const studentName = report.student_name;
         const headers = ["Nombre_Alumno", "ID_Alumno", "Materia", "Calificacion", "Promedio_Total"];
@@ -101,6 +111,9 @@ export default function StudentGradesPage() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+
+        setModalStatus("success");
+        setModalMessage("El archivo CSV fue descargado correctamente.");
     };
 
     return (
@@ -117,11 +130,10 @@ export default function StudentGradesPage() {
                             value={searchTerm}
                             onChange={handleInputChange}
                             placeholder="Ej: juan.perez@email.com"
-                            className="px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
+                            className="w-full px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                             autoComplete="off"
                         />
 
-                        {/* SUGERENCIAS */}
                         <div className="absolute w-full mt-1 z-10">
                             {searchTerm.length >= 3 && !report && (
                                 <div className="bg-white border border-grisM rounded-lg shadow-lg max-h-64 overflow-y-auto">
@@ -134,7 +146,7 @@ export default function StudentGradesPage() {
 
                                     {!loading && suggestions.length === 0 && (
                                         <p className="p-3 text-sm text-gray-500">
-                                            No se encontraron resultados.
+                                            No se encontraró ningun alumno con ese nombre.
                                         </p>
                                     )}
 
@@ -178,7 +190,7 @@ export default function StudentGradesPage() {
 
                         <button
                             onClick={handleExportCSV}
-                            className="flex items-center text-sm px-3 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+                            className="flex items-center text-sm px-3 py-2 rounded-lg bg-lime-700 text-white hover:bg-lime-600"
                         >
                             <Download size={18} className="mr-1" />
                             Descargar CSV
@@ -213,6 +225,12 @@ export default function StudentGradesPage() {
                     )}
                 </div>
             )}
+
+            <ActionStatusModal
+                status={modalStatus}
+                message={modalMessage}
+                onClose={() => setModalStatus(null)}
+            />
         </div>
     );
 }
