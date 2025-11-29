@@ -104,3 +104,11 @@ export const getTotalProfessors = async () => { // NUEVA FUNCIÓN
         throw error;
     }
 };
+
+export const getTeacherSubjectLoad = async () => {
+  const headers = getAuthHeaders();
+  const res = await fetch(`${API_BASE_URL}/subjects/teacher-load/`, { headers });
+  
+  if (!res.ok) throw new Error(`Error ${res.status}`);
+  return await res.json();
+};
