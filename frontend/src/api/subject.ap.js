@@ -120,7 +120,7 @@ export const removeStudentFromSubject = async (subjectId, studentId) => {
 };
 
 
-export const getTeacherSubjectLoad = async (teacherId = null) => {
+/*export const getTeacherSubjectLoad = async (teacherId = null) => {
     try {
         const headers = getAuthHeaders(false);
         let url = `${API_BASE_URL}/subjects/teacher-load/`;
@@ -140,7 +140,7 @@ export const getTeacherSubjectLoad = async (teacherId = null) => {
     } catch (error) {
         throw error;
     }
-};
+};*/
 
 export const getTotalSubjects = async () => { // NUEVA FUNCIÓN
     try {
@@ -170,6 +170,30 @@ export const getSubjectGradesReport = async (subjectId) => {
 
         if (!response.ok) {
             throw new Error(`Error al cargar el reporte de notas: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+
+export const getTeacherSubjectLoad = async (teacherId = null) => {
+    try {
+        const headers = getAuthHeaders(false);
+        let url = `${API_BASE_URL}/subjects/teacher-load/`;
+        
+        // Si se proporciona un ID de profesor, se añade como query parameter
+        if (teacherId !== null && teacherId !== "") {
+            url += `?teacher_id=${teacherId}`;
+        }
+        
+        const response = await fetch(url, { 
+            headers: headers 
+        });
+        if (!response.ok) {
+            throw new Error(`Error al cargar la carga académica: ${response.status}`);
         }
         return await response.json();
     } catch (error) {
