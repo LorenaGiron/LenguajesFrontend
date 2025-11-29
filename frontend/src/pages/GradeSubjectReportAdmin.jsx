@@ -16,6 +16,7 @@ export default function SubjectGradesReport() {
                 const data = await getSubjects(); 
                 setSubjects(data);
             } catch (err) {
+                console.log(err);
                 setError("Error al cargar la lista de materias.");
             }
         };
@@ -48,6 +49,7 @@ export default function SubjectGradesReport() {
                 }
 
             } catch (err) {
+                console.log(err);
                 setError("Error al cargar el reporte de calificaciones.");
             } finally {
                 setLoading(false);
@@ -105,7 +107,7 @@ export default function SubjectGradesReport() {
                     onClick={handleExportCSV}
                     className={`flex items-center text-sm px-3 py-2 rounded-lg transition duration-150 
                                 ${reportData?.students_with_grades.length > 0 ? 
-                                'bg-green-600 text-white hover:bg-green-700' :
+                                'bg-lime-700 text-white hover:bg-lime-600' :
                                 'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
                     disabled={!reportData || reportData.students_with_grades.length === 0}
                 >
@@ -122,7 +124,7 @@ export default function SubjectGradesReport() {
                     id="subject-select"
                     value={selectedSubjectId}
                     onChange={handleSelectChange}
-                    className="w-full md:w-1/2 p-3 border border-grisM rounded-lg focus:ring-azulM focus:border-azulM"
+                    className="w-full px-3 py-2 border border-grisC rounded-md placeholder:text-grisM text-grisF focus:outline-none focus:ring-2 focus:ring-azulM"
                     disabled={subjects.length === 0}
                 >
                     <option value="">-- Selecciona una Materia --</option>
@@ -144,7 +146,7 @@ export default function SubjectGradesReport() {
                         </h3>
                         {average !== null && (
                              <div className="bg-grisC p-2 rounded-md border text-sm font-semibold">
-                                Promedio del grupo: <span className="text-red-600">{average}</span>
+                                Promedio del grupo: <span className="text-azulM">{average}</span>
                             </div>
                         )}
                     </div>
@@ -154,10 +156,10 @@ export default function SubjectGradesReport() {
                     ) : (
                         <table className="min-w-full border-collapse">
                             <thead>
-                                <tr className="bg-gray-100 text-left">
-                                    <th className="p-2 border border-gray-300 w-16">ID</th>
-                                    <th className="p-2 border border-gray-300">Nombre del Alumno</th>
-                                    <th className="p-2 border border-gray-300 text-center w-40">Calificación</th>
+                                <tr className="bg-grisC text-left">
+                                    <th className="p-2 border border-grisM w-16">ID</th>
+                                    <th className="p-2 border border-grisM">Nombre del Alumno</th>
+                                    <th className="p-2 border border-grisM text-center w-40">Calificación</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -169,13 +171,13 @@ export default function SubjectGradesReport() {
                                     </tr>
                                 ) : (
                                     reportData?.students_with_grades.map((studentGrade) => (
-                                        <tr key={studentGrade.grade_id} className="hover:bg-gray-50">
-                                            <td className="p-2 border border-gray-300">{studentGrade.student_id}</td>
-                                            <td className="p-2 border border-gray-300 flex items-center gap-2">
+                                        <tr key={studentGrade.grade_id} className="hover:bg-grisC">
+                                            <td className="p-2 border border-grisM">{studentGrade.student_id}</td>
+                                            <td className="p-2 border border-grisM flex items-center gap-2">
                                                 <User size={16} className="text-azulF" />
                                                 {studentGrade.student_name}
                                             </td>
-                                            <td className="p-2 border border-gray-300 text-center font-bold text-red-600">
+                                            <td className="p-2 border border-grisM text-center font-bold text-red-600">
                                                 {studentGrade.score}
                                             </td>
                                         </tr>
