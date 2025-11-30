@@ -2,8 +2,10 @@ const API_BASE_URL = "http://localhost:8000/api/v1";
 
 const getAuthHeaders = (contentType = false) => {
     const token = localStorage.getItem("access_token");
+     // ✅ AHORA - Solo advierte en consola
     if (!token) {
-        throw new Error("No hay token de autenticación disponible.");
+        console.warn("⚠️ No hay token de autenticación. Algunas funciones pueden fallar.");
+        return contentType ? { "Content-Type": "application/json" } : {};
     }
     const headers = { "Authorization": `Bearer ${token}` };
     if (contentType) {
