@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -17,6 +17,48 @@ export default function TeacherSidebar() {
   const { user } = useAuth();
   const [openMenu, setOpenMenu] = useState(null);
   console.log("Usuario:", user);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+
+  // Cargar foto de perfil desde localStorage
+  useEffect(() => {
+    const loadProfilePhoto = () => {
+      const savedProfile = localStorage.getItem("teacherProfile");
+      if (savedProfile) {
+        try {
+          const parsed = JSON.parse(savedProfile);
+          if (parsed.photoPreview) {
+            setProfilePhoto(parsed.photoPreview);
+          } else {
+            setProfilePhoto(null);
+          }
+        } catch (error) {
+          console.error("Error al cargar foto de perfil:", error);
+        }
+      } else {
+        setProfilePhoto(null);
+      }
+    };
+
+    // Cargar al montar el componente
+    loadProfilePhoto();
+
+    // Escuchar cambios en localStorage (cuando se guarda el perfil)
+    const handleStorageChange = (e) => {
+      if (e.key === "teacherProfile" || e.key === null) {
+        loadProfilePhoto();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    
+    // También escuchar eventos personalizados (para cambios en la misma pestaña)
+    window.addEventListener("teacherProfileUpdated", loadProfilePhoto);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("teacherProfileUpdated", loadProfilePhoto);
+    };
+  }, []);
 
   const toggleMenu = (menu) => {
     setOpenMenu(openMenu === menu ? null : menu);
@@ -74,6 +116,32 @@ export default function TeacherSidebar() {
       </div>
 
       {/* MENÚ */}
+      {/* Usuario actual */}
+      <div className="px-4 py-3 border-b border-azulC bg-azulM">
+        <div className="flex items-center gap-3">
+          {/* Foto de perfil */}
+          <div className="flex-shrink-0">
+            {profilePhoto ? (
+              <img 
+                src={profilePhoto} 
+                alt="Foto de perfil" 
+                className="w-12 h-12 rounded-full object-cover border-2 border-azulC"
+              />
+            ) : (
+              <div className="w-12 h-12 rounded-full bg-azulC flex items-center justify-center border-2 border-azulC">
+                <User className="w-6 h-6 text-white" />
+              </div>
+            )}
+          </div>
+          {/* Información del usuario */}
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-azulC">Profesor</p>
+            <p className="text-sm font-semibold truncate">{user?.full_name || "Usuario"}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Navegación */}
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
 
         {profesorMenuItems.map((item, index) => (

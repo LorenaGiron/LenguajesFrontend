@@ -75,6 +75,10 @@ export default function TeacherProfile() {
         photoPreview: profileData.photoPreview,
       };
       localStorage.setItem("teacherProfile", JSON.stringify(dataToSave));
+      
+      // Disparar evento personalizado para actualizar el sidebar
+      window.dispatchEvent(new Event("teacherProfileUpdated"));
+      
       setStatus({ type: "success", message: "✓ Perfil actualizado correctamente." });
       setTimeout(() => setStatus(null), 3000);
     } catch (err) {
