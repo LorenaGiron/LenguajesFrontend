@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { loginRequest, getProfileRequest } from "../api/auth.api";
 
 const AuthContext = createContext();
@@ -9,6 +9,28 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!token) return;
+
+      try {
+        const profileResponse = await getProfileRequest();
+        const profile = profileResponse?.data ?? profileResponse;
+
+        setUser(profile);
+        setRole(profile.role || null);
+        setIsAuthenticated(true);
+      } catch (err) {
+        console.error("Error cargando perfil:", err);
+        localStorage.removeItem(TOKEN_KEY);
+        setToken(null);
+        setIsAuthenticated(false);
+      }
+    };
+
+    loadProfile();
+  }, [token]);
 
   const login = async (username, password) => {
     try {

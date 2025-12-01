@@ -6,11 +6,11 @@ const PASSING_THRESHOLD = 70;
 
 const COLOR_MAP = {
     average: "gray-700",
-    highest: "green-600",
-    lowest: "red-600",
+    highest: "green-700",
+    lowest: "red-700",
     enrolled: "gray-700",
-    passed: "green-600",
-    failed: "red-600",
+    passed: "green-700",
+    failed: "red-700",
     pending: "gray-700",
 };
 
@@ -96,7 +96,7 @@ export default function TeacherReportsPage() {
         const failed = gradedCount - passed;
         const pending = totalStudentsEnrolled - gradedCount;
         const percentagePassed = ((passed / gradedCount) * 100).toFixed(1);
-
+        
         return {
             average,
             highest,
