@@ -30,14 +30,13 @@ const FormStatusModal = ({ status, message, onClose }) => {
                     <div className={`p-3 rounded-md ${bgColor} border ${borderColor} text-sm ${textColor}`}>
                         {message}
                     </div>
-                    {isSuccess && <p className="text-sm text-grisF mt-3">Serás redirigido a la lista en un momento.</p>}
                 </div>
                 
-                <div className="px-6 py-4 bg-gray-50 flex justify-end border-t">
+                <div className="px-6 py-4 bg-grisC flex justify-end border-t">
                     <button
                         type="button"
                         onClick={onClose}
-                        className="px-4 py-2 bg-azulM text-white rounded-lg font-semibold hover:bg-azulF transition-colors"
+                        className="px-4 py-2 bg-azulF text-white rounded-lg font-semibold hover:bg-azulM transition-colors"
                     >
                         Aceptar
                     </button>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function AssignmentModal({ subject, currentStudents, allStudents, onClose, onSuccess, assignApi }) {
+export default function AssignmentModal({ subject, currentStudents, allStudents, onClose, onSuccess, assignApi, onStatus }) {
 
     const [selectedStudentIds, setSelectedStudentIds] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -38,12 +38,23 @@ export default function AssignmentModal({ subject, currentStudents, allStudents,
 
             const updatedSubject = await assignApi(subject.id, finalStudentList);
 
-            alert(`Estudiantes asignados a "${subject.name}" con éxito.`);
-
             onSuccess(updatedSubject);
+
+            onStatus({ 
+                status: 'success', 
+                message: `Estudiantes asignados a "${subject.name}" con éxito.` 
+            });
+
             onClose();
         } catch (err) {
-            setError("Error al guardar la asignación: " + (err.response?.data?.detail || err.message));
+            const msg = "Error al asignar estudiantes: " + (err.response?.data?.detail || err.message);
+
+            onStatus({
+                status: "error",
+                message: msg
+            });
+
+            setError(msg);
         } finally {
             setLoading(false);
         }
@@ -53,7 +64,7 @@ export default function AssignmentModal({ subject, currentStudents, allStudents,
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-xl max-w-xl w-full">
                 <h2 className="text-2xl font-semibold mb-4 text-azulF border-b pb-2">
-                    Asignar Estudiantes a: {subject.name}
+                    Asignar Estudiantes a {subject.name}
                 </h2>
 
                 <form onSubmit={handleSubmit}>
@@ -90,7 +101,7 @@ export default function AssignmentModal({ subject, currentStudents, allStudents,
                         <button
                             type="button"
                             onClick={onClose}
-                            className="px-4 py-2 text-gray-700 border rounded-lg hover:bg-gray-100"
+                            className="px-4 py-2 text-gray-700 border rounded-lg hover:bg-grisC"
                             disabled={loading}
                         >
                             Cancelar
@@ -99,7 +110,7 @@ export default function AssignmentModal({ subject, currentStudents, allStudents,
                         {availableStudents.length > 0 && (
                             <button
                                 type="submit"
-                                className="px-4 py-2 bg-azulF text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+                                className="px-4 py-2 bg-azulF text-white rounded-lg hover:bg-azulM disabled:bg-grisC"
                                 disabled={loading}
                             >
                                 {loading ? 'Guardando...' : 'Guardar Asignaciones'}

@@ -4,13 +4,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; 
 import Sidebar from "../components/layout/Sidebar.jsx";
 import Topbar from "../components/layout/Topbar.jsx";
-
+import { Users, UserCog, BookOpen } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 import { getTotalStudents } from "../api/students.api.js";
 import { getTotalSubjects } from "../api/subject.ap.js";
 import { getTotalProfessors } from "../api/users.api.js";
 
 export default function DashboardAdmin() {
-   
+    const { user } = useAuth();
     const navigate = useNavigate(); 
     const [stats, setStats] = useState({
         students: '...',
@@ -67,10 +68,10 @@ export default function DashboardAdmin() {
                 <main className="flex-1 p-8">
                     <div className="mb-10">
                         <h1 className="text-3xl font-semibold text-azulF">
-                            Panel Administrativo
+                            Bienvenido, {user?.full_name}
                         </h1>
                         <p className="text-grisF mt-1">
-                            Bienvenido/a al centro de control del Sistema de Gestión Escolar.
+                            Panel de control del Sistema de Gestión Escolar.
                         </p>
                     </div>
                     
@@ -82,23 +83,48 @@ export default function DashboardAdmin() {
 
                     {/* Tarjetas de estadísticas */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                        
                         <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
-                            <h3 className="text-azulF text-xl font-semibold">Estudiantes</h3>
-                            <p className="text-4xl font-bold mt-3 text-gray-700">{stats.students}</p>
-                            <p className="text-sm text-gray-500 mt-1">Registrados actualmente</p>
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h3 className="text-azulF text-xl font-semibold">Estudiantes</h3>
+                                    <p className="text-4xl font-bold mt-3 text-gray-700">{stats.students}</p>
+                                    <p className="text-sm text-gray-500 mt-1">Registrados actualmente</p>
+                                </div>
+
+                                <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
+                                    <Users className="h-6 w-6 text-azulF" />
+                                </div>
+                            </div>
                         </div>
 
                         <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
-                            <h3 className="text-azulF text-xl font-semibold">Profesores</h3>
-                            <p className="text-4xl font-bold mt-3 text-gray-700">{stats.professors}</p>
-                            <p className="text-sm text-gray-500 mt-1">Activos en el sistema</p>
-                        </div>
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h3 className="text-azulF text-xl font-semibold">Profesores</h3>
+                                        <p className="text-4xl font-bold mt-3 text-gray-700">{stats.professors}</p>
+                                        <p className="text-sm text-gray-500 mt-1">Activos en el sistema</p>
+                                    </div>
 
-                        <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
-                            <h3 className="text-azulF text-xl font-semibold">Materias</h3>
-                            <p className="text-4xl font-bold mt-3 text-gray-700">{stats.subjects}</p>
-                            <p className="text-sm text-gray-500 mt-1">Disponibles este ciclo</p>
-                        </div>
+                                    <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
+                                        <UserCog className="h-6 w-6 text-azulF" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h3 className="text-azulF text-xl font-semibold">Materias</h3>
+                                        <p className="text-4xl font-bold mt-3 text-gray-700">{stats.subjects}</p>
+                                        <p className="text-sm text-gray-500 mt-1">Disponibles este ciclo</p>
+                                    </div>
+
+                                    <div className="w-12 h-12 bg-azulC/10 rounded-full flex items-center justify-center">
+                                        <BookOpen className="h-6 w-6 text-azulF" />
+                                    </div>
+                                </div>
+                            </div>
                     </div>
 
                     {/* Acciones rápidas */}

@@ -2,8 +2,10 @@ const API_BASE_URL = "http://localhost:8000/api/v1";
 
 const getAuthHeaders = (contentType = false) => {
     const token = localStorage.getItem("access_token");
+     // ✅ AHORA - Solo advierte en consola
     if (!token) {
-        throw new Error("No hay token de autenticación disponible.");
+        console.warn("⚠️ No hay token de autenticación. Algunas funciones pueden fallar.");
+        return contentType ? { "Content-Type": "application/json" } : {};
     }
     const headers = { "Authorization": `Bearer ${token}` };
     if (contentType) {
@@ -120,7 +122,7 @@ export const removeStudentFromSubject = async (subjectId, studentId) => {
 };
 
 
-export const getTeacherSubjectLoad = async (teacherId = null) => {
+/*export const getTeacherSubjectLoad = async (teacherId = null) => {
     try {
         const headers = getAuthHeaders(false);
         let url = `${API_BASE_URL}/subjects/teacher-load/`;
@@ -140,7 +142,7 @@ export const getTeacherSubjectLoad = async (teacherId = null) => {
     } catch (error) {
         throw error;
     }
-};
+};*/
 
 export const getTotalSubjects = async () => { // NUEVA FUNCIÓN
     try {
@@ -154,6 +156,48 @@ export const getTotalSubjects = async () => { // NUEVA FUNCIÓN
         }
         const data = await response.json();
         return data.total;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+
+export const getSubjectGradesReport = async (subjectId) => {
+    try {
+        const headers = getAuthHeaders(false);
+        const response = await fetch(`${API_BASE_URL}/reports/subject-grades/${subjectId}`, { 
+            headers: headers 
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al cargar el reporte de notas: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+
+export const getTeacherSubjectLoad = async (teacherId = null) => {
+    try {
+        const headers = getAuthHeaders(false);
+        let url = `${API_BASE_URL}/subjects/teacher-load/`;
+        
+        // Si se proporciona un ID de profesor, se añade como query parameter
+        if (teacherId !== null && teacherId !== "") {
+            url += `?teacher_id=${teacherId}`;
+        }
+        
+        const response = await fetch(url, { 
+            headers: headers 
+        });
+        if (!response.ok) {
+            throw new Error(`Error al cargar la carga académica: ${response.status}`);
+        }
+        return await response.json();
     } catch (error) {
         throw error;
     }

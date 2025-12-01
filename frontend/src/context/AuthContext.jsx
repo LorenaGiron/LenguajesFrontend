@@ -1,47 +1,77 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { loginRequest, getProfileRequest } from "../api/auth.api";
 
 const AuthContext = createContext();
+const TOKEN_KEY = "access_token";
 
 export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(localStorage.getItem(TOKEN_KEY) || null);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!token);
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const [isAuthenticated, setIsAuthenticated] = useState(!!token);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!token) return;
+
+      try {
+        const profileResponse = await getProfileRequest();
+        const profile = profileResponse?.data ?? profileResponse;
+
+        setUser(profile);
+        setRole(profile.role || null);
+        setIsAuthenticated(true);
+      } catch (err) {
+        console.error("Error cargando perfil:", err);
+        localStorage.removeItem(TOKEN_KEY);
+        setToken(null);
+        setIsAuthenticated(false);
+      }
+    };
+
+    loadProfile();
+  }, [token]);
 
   const login = async (username, password) => {
     try {
-      //  Obtener token
       const tokenResponse = await loginRequest(username, password);
-      const receivedToken = tokenResponse.access_token;
+      const receivedToken = tokenResponse?.access_token;
+      
+      if (!receivedToken) throw new Error("Token no recibido del servidor.");
 
       setToken(receivedToken);
-      localStorage.setItem("token", receivedToken);
+      localStorage.setItem(TOKEN_KEY, receivedToken);
       setIsAuthenticated(true);
 
-      // Obtener perfil
       const profileResponse = await getProfileRequest();
+      const profile = profileResponse?.data ?? profileResponse;
 
-      setUser(profileResponse);
-      setRole(profileResponse.role);   
+      if (!profile) throw new Error("No se pudo obtener el perfil de usuario.");
 
-      return profileResponse.role;
+      setUser(profile);
+      setRole(profile.role || null);
+
+      return profile.role;
     } catch (error) {
       console.error("Error during login:", error);
-      throw new Error("Credenciales inválidas o error de red.");
+      setToken(null);
+      localStorage.removeItem(TOKEN_KEY);
+      setIsAuthenticated(false);
+      throw error;
     }
   };
 
   const logout = () => {
-    localStorage.removeItem("token"); 
+    localStorage.removeItem(TOKEN_KEY);
     setUser(null);
+    setRole(null);
+    setToken(null);
     setIsAuthenticated(false);
-    localStorage.removeItem("userRole");
   };
 
   const value = {
     user,
-    role,     
+    role,
     token,
     login,
     logout,
