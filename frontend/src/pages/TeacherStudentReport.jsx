@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Search, User, BookOpen, TrendingUp, Award, X } from "lucide-react";
+import { Search, User, BookOpen, TrendingUp, Award, X, NotepadText  } from "lucide-react";
 import ActionStatusModal from "../components/ui/ActionStatusModal.jsx";
 
 export default function StudentReportView() {
@@ -107,27 +107,12 @@ const loadStudentReport = async (studentId) => {
     return (sum / studentReport.grades.length).toFixed(2);
   };
 
-  // Determinar color según calificación
-  const getGradeColor = (score) => {
-    if (score >= 90) return "text-green-600 bg-green-100";
-    if (score >= 70) return "text-blue-600 bg-blue-100";
-    if (score >= 60) return "text-yellow-600 bg-yellow-100";
-    return "text-red-600 bg-red-100";
-  };
-
-  // Determinar estado del promedio
-  const getAverageStatus = (avg) => {
-    if (avg >= 90) return { label: "Excelente", color: "text-green-600" };
-    if (avg >= 80) return { label: "Muy Bien", color: "text-blue-600" };
-    if (avg >= 70) return { label: "Bien", color: "text-yellow-600" };
-    if (avg >= 60) return { label: "Suficiente", color: "text-orange-600" };
-    return { label: "Insuficiente", color: "text-red-600" };
-  };
-
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-azulF mb-2">Reporte por Alumno</h1>
+        <h1 className="text-3xl font-semibold text-azulF mb-2 flex items-center gap-3">
+          <NotepadText  size={28} /> Calificaciones del Alumno
+        </h1>
         <p className="text-grisF">
           Busca un alumno para ver su historial académico completo
         </p>
@@ -150,7 +135,7 @@ const loadStudentReport = async (studentId) => {
             {selectedStudent && (
               <button
                 onClick={handleClearSelection}
-                className="p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                className="p-3 bg-red-700 text-white rounded-lg hover:bg-red-600 transition"
                 title="Limpiar búsqueda"
               >
                 <X className="w-5 h-5" />
@@ -187,7 +172,7 @@ const loadStudentReport = async (studentId) => {
       ) : studentReport && selectedStudent ? (
         <div className="space-y-6">
           {/* Información del alumno */}
-          <div className="bg-gradient-to-r from-azulF to-azulM text-white rounded-xl shadow border p-6">
+          <div className="bg-gradient-to-b from-azulF to-azulM text-white rounded-xl shadow border p-6">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
@@ -212,7 +197,7 @@ const loadStudentReport = async (studentId) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl shadow border p-6">
               <div className="flex items-center gap-3 mb-2">
-                <BookOpen className="w-6 h-6 text-azulC" />
+                <BookOpen className="w-6 h-6 text-azulM" />
                 <p className="text-gray-600 font-medium">Materias Inscritas</p>
               </div>
               <p className="text-3xl font-bold text-azulF">
@@ -222,24 +207,21 @@ const loadStudentReport = async (studentId) => {
 
             <div className="bg-white rounded-xl shadow border p-6">
               <div className="flex items-center gap-3 mb-2">
-                <TrendingUp className="w-6 h-6 text-green-600" />
+                <TrendingUp className="w-6 h-6 text-azulM" />
                 <p className="text-gray-600 font-medium">Promedio General</p>
               </div>
               <p className="text-3xl font-bold text-azulF">
                 {calculateGeneralAverage()}
               </p>
               <p
-                className={`text-sm font-semibold mt-1 ${
-                  getAverageStatus(calculateGeneralAverage()).color
-                }`}
+                className="text-sm font-semibold mt-1 text-azulF"
               >
-                {getAverageStatus(calculateGeneralAverage()).label}
               </p>
             </div>
 
             <div className="bg-white rounded-xl shadow border p-6">
               <div className="flex items-center gap-3 mb-2">
-                <Award className="w-6 h-6 text-yellow-600" />
+                <Award className="w-6 h-6 text-azulM" />
                 <p className="text-gray-600 font-medium">Calificaciones</p>
               </div>
               <p className="text-3xl font-bold text-azulF">
@@ -284,9 +266,7 @@ const loadStudentReport = async (studentId) => {
                           <td className="p-3 border border-grisM text-center">
                             {grade ? (
                               <span
-                                className={`inline-block px-4 py-2 rounded-lg font-bold text-lg ${getGradeColor(
-                                  grade.score
-                                )}`}
+                                className={`inline-block px-4 py-2 rounded-lg font-bold text-lg text-azulF`}
                               >
                                 {grade.score}
                               </span>
