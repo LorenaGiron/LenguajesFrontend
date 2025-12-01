@@ -16,6 +16,7 @@ import logo from "../../assets/logo.png";
 export default function TeacherSidebar() {
   const { user } = useAuth();
   const [openMenu, setOpenMenu] = useState(null);
+  console.log("Usuario:", user);
 
   const toggleMenu = (menu) => {
     setOpenMenu(openMenu === menu ? null : menu);

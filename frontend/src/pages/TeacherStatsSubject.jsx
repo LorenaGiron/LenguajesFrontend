@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { getTeacherSubjectLoad, getSubjectGradesReport } from "../api/subject.ap.js";
-import { ArrowLeftCircle, ArrowRightCircle, BarChart2, Users, CheckCircle, XCircle, Gauge, ClipboardList, TrendingUp } from "lucide-react";
+import { ArrowLeftCircle, ArrowRightCircle, BarChart2, Users, CheckCircle, XCircle, ChartColumn , ClipboardList, TrendingUp, TrendingDown } from "lucide-react";
 
 const PASSING_THRESHOLD = 70;
 
 const COLOR_MAP = {
-    average: "azulF",
+    average: "gray-700",
     highest: "green-600",
     lowest: "red-600",
     enrolled: "gray-700",
     passed: "green-600",
     failed: "red-600",
-    pending: "orange-600",
+    pending: "gray-700",
 };
 
 const StatsCard = ({ title, value, icon: Icon, color }) => (
@@ -19,7 +19,7 @@ const StatsCard = ({ title, value, icon: Icon, color }) => (
         <div className="flex justify-between items-center">
             <div>
                 <p className="text-lg font-semibold text-gray-500 mb-2">{title}</p>
-                <h3 className={`text-5xl font-extrabold text-${color}`}>{value}</h3>
+                <h3 className={`text-4xl font-extrabold text-${color}`}>{value}</h3>
             </div>
             <div className={`w-20 h-20 rounded-full flex items-center justify-center bg-${color}/10`}>
                 <Icon size={40} className={`text-${color}`} />
@@ -129,10 +129,13 @@ export default function TeacherReportsPage() {
         return <div className="p-8 text-center bg-red-100 text-red-700 h-screen flex items-center justify-center">{error}</div>;
 
     return (
-        <div className="p-8 m-[10px-20px-200px-300px] min-h-[calc(100vh-100px)] flex flex-col bg-gray-50 rounded-2xl shadow-xl">
-            <h1 className="text-4xl font-bold text-azulF mb-8 flex items-center justify-center gap-3">
-                <BarChart2 size={36} /> Reporte de Calificaciones
+        <div className="p-8">
+            <h1 className="text-3xl font-semibold text-azulF mb-2 flex items-center gap-3">
+                <BarChart2 size={28} /> Estadísticas generales
             </h1>
+            <p className="text-grisF mb-6">
+                Consulta las estadísticas de calificaciones por materia.
+            </p>
 
             <div className="bg-white p-4 rounded-xl shadow border mb-8 flex items-center justify-between">
                 <button
@@ -168,7 +171,7 @@ export default function TeacherReportsPage() {
                         <StatsCard 
                             title="Promedio General"
                             value={stats.average}
-                            icon={Gauge}
+                            icon={ChartColumn}
                             color={COLOR_MAP.average}
                         />
                         <StatsCard 
@@ -180,7 +183,7 @@ export default function TeacherReportsPage() {
                         <StatsCard 
                             title="Calificación Mínima"
                             value={stats.lowest}
-                            icon={TrendingUp}
+                            icon={TrendingDown}
                             color={COLOR_MAP.lowest}
                         />
                         <StatsCard 

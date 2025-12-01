@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getTeacherSubjectLoad } from "../api/subject.ap.js";
+import { BookOpen } from "lucide-react";
 
 export default function AdminMaterias() {
   const { user } = useAuth();
@@ -34,7 +35,9 @@ export default function AdminMaterias() {
     <div className="p-8">
 
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-azulF">Mis materias</h1>
+        <h1 className="text-3xl font-semibold text-azulF mb-2 flex items-center gap-3">
+          <BookOpen size={28} /> Mis Materia
+        </h1>
         <p className="text-grisF mt-2">
           Consulta las materias registradas en el sistema.
         </p>
