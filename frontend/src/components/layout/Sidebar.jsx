@@ -8,6 +8,7 @@ import {
   FileChartColumn,
   GraduationCap,
   Calendar,
+  BarChart3,
   FileText,
   ClipboardList,
   User,
@@ -20,6 +21,8 @@ import logo from '../../assets/logo.png';
 export default function Sidebar() {
   const { user } = useAuth();
   const role = user?.role || "admin";
+  console.log("USER EN SIDEBAR:", user);
+  console.log("ROL DETECTADO:", role);
 
   const [openMenu, setOpenMenu] = useState(null);
 
@@ -92,11 +95,27 @@ export default function Sidebar() {
         icon: ClipboardList,
         submenu: [
           { label: "Capturar calificaciones", path: "/profesor/calificaciones/capturar" },
-          { label: "Reporte por alumno", path: "/profesor/calificaciones/alumno" },
+          { label: "Reporte por alumno", path: "/profesor/calificaciones/reporte-alumno" },
         ],
       },
       {
-        title: "Perfil",
+        title: "Reportes",
+        icon: BarChart3,
+        submenu: [
+          { 
+            label: "Estadísticas por materia", 
+            path: "/profesor/reportes/materia",
+            description: "Análisis de desempeño de la clase"
+          },
+          { 
+            label: "Resumen de calificaciones", 
+            path: "/profesor/reportes/resumen",
+            description: "Consolidado de todas las notas"
+          },
+        ]
+      },
+      {
+        title: "Mi perfil",
         icon: User,
         path: "/profesor/perfil",
       },
